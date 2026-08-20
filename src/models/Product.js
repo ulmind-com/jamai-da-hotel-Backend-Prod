@@ -43,6 +43,12 @@ const productSchema = new mongoose.Schema(
             type: String,
             default: '',
         },
+        // Charged per unit on top of the price, and billed free of GST.
+        packagingCharge: {
+            type: Number,
+            default: 0,
+            min: 0,
+        },
         cgst: {
             type: Number,
             default: 0, // Percentage

@@ -358,7 +358,10 @@ const getAnalytics = async (req, res, next) => {
 // @access  Private/Admin
 const createPOSOrder = async (req, res, next) => {
     try {
-        const { items, customerName, customerMobile, paymentMethod, discountType, discountValue } = req.body;
+        const { items, customerName, customerMobile, paymentMethod, discountType, discountValue, applyPackaging } = req.body;
+
+        // Dine-in needs no boxes; the cashier flags a parcel to charge packaging.
+        const chargePackaging = !!applyPackaging;
 
         if (!items || items.length === 0) {
             res.status(400);
@@ -369,6 +372,7 @@ const createPOSOrder = async (req, res, next) => {
         let cgstTotal = 0;
         let sgstTotal = 0;
         let igstTotal = 0;
+        let packagingTotal = 0;
 
         // Verify and process items against the DB
         for (let i = 0; i < items.length; i++) {
@@ -399,14 +403,19 @@ const createPOSOrder = async (req, res, next) => {
             items[i].cgst = productDoc.cgst;
             items[i].sgst = productDoc.sgst;
             items[i].igst = productDoc.igst;
+            items[i].packagingCharge = productDoc.packagingCharge || 0;
 
             cgstTotal += c;
             sgstTotal += s;
             igstTotal += iVal;
+            // Per unit, and deliberately outside the taxable base.
+            if (chargePackaging) {
+                packagingTotal += (productDoc.packagingCharge || 0) * items[i].quantity;
+            }
         }
 
         const taxAmount = cgstTotal + sgstTotal + igstTotal;
-        const subtotalWithTax = totalAmount + taxAmount;
+        const subtotalWithTax = totalAmount + taxAmount + packagingTotal;
 
         // Calculate discount
         let discountAmount = 0;
@@ -427,7 +436,8 @@ const createPOSOrder = async (req, res, next) => {
             price: item.price,
             cgst: item.cgst,
             sgst: item.sgst,
-            igst: item.igst
+            igst: item.igst,
+            packagingCharge: chargePackaging ? (item.packagingCharge || 0) : 0
         }));
 
         const newOrder = new Order({
@@ -438,6 +448,7 @@ const createPOSOrder = async (req, res, next) => {
             cgstTotal,
             sgstTotal,
             igstTotal,
+            packagingTotal,
             discountApplied: discountAmount,
             discountType: discountType || 'NONE',
             discountValue: discountValue || 0,

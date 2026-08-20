@@ -222,6 +222,12 @@
                     <span>Taxes</span>
                     <span>₹{{tax}}</span>
                 </div>
+                {{#if packaging}}
+                <div class="billing-row">
+                    <span>Packaging Charge</span>
+                    <span>₹{{packaging}}</span>
+                </div>
+                {{/if}}
                 {{#if deliveryFee}}
                 <div class="billing-row">
                     <span>Delivery Fee</span>

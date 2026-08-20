@@ -49,6 +49,8 @@ const orderSchema = new mongoose.Schema(
                 sgst: Number,
                 igst: Number,
                 hsnCode: String,
+                // Per-unit packaging charge at the time of ordering.
+                packagingCharge: { type: Number, default: 0 },
             },
         ],
         totalAmount: {
@@ -78,6 +80,8 @@ const orderSchema = new mongoose.Schema(
         sgstTotal: { type: Number, default: 0 },
         igstTotal: { type: Number, default: 0 },
         deliveryFee: { type: Number, default: 0 },
+        // Sum of per-unit packaging charges across the items (GST-free).
+        packagingTotal: { type: Number, default: 0 },
         deliveryAddress: {
             addressLine1: String,
             addressLine2: String,

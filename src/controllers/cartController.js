@@ -48,6 +48,7 @@ const calculateCartTotals = async (cart) => {
     let cgstTotal = 0;
     let sgstTotal = 0;
     let igstTotal = 0;
+    let packagingTotal = 0;
 
     // We need strict product details for tax
     // Assuming cart.items is populated with product
@@ -78,6 +79,8 @@ const calculateCartTotals = async (cart) => {
             cgstTotal += c;
             sgstTotal += s;
             igstTotal += iVal;
+            // Per unit and GST-free, so it stays out of the taxable base.
+            packagingTotal += (product.packagingCharge || 0) * quantity;
 
             // We can optionally add tax info to item result if needed by frontend
         }
@@ -93,8 +96,9 @@ const calculateCartTotals = async (cart) => {
         itemsTotal,
         totalTax,
         taxBreakdown: { cgstTotal, sgstTotal, igstTotal },
+        packagingTotal,
         totalPrice: itemsTotal, // Keep existing field compatibility
-        finalTotal: itemsTotal + totalTax
+        finalTotal: itemsTotal + totalTax + packagingTotal
     };
 };
 
@@ -103,7 +107,7 @@ const calculateCartTotals = async (cart) => {
 // @access  Private
 const getCart = async (req, res, next) => {
     try {
-        let cart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name imageURL price cgst sgst igst hsnCode');
+        let cart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name imageURL price cgst sgst igst hsnCode packagingCharge');
 
         if (!cart) {
             cart = await Cart.create({ user: req.user._id, items: [] });
@@ -196,7 +200,7 @@ const addToCart = async (req, res, next) => {
         }
 
         await cart.save();
-        cart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name imageURL price cgst sgst igst');
+        cart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name imageURL price cgst sgst igst packagingCharge');
 
         const totals = await calculateCartTotals(cart);
         res.json({ ...cart.toObject(), ...totals });
@@ -245,7 +249,7 @@ const updateCartItem = async (req, res, next) => {
                 cart.items[itemIndex].quantity = quantity;
             }
             await cart.save();
-            const updatedCart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name imageURL price cgst sgst igst');
+            const updatedCart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name imageURL price cgst sgst igst packagingCharge');
             const totals = await calculateCartTotals(updatedCart);
             res.json({ ...updatedCart.toObject(), ...totals });
         } else {
@@ -281,7 +285,7 @@ const removeFromCart = async (req, res, next) => {
         if (itemIndex > -1) {
             cart.items.splice(itemIndex, 1);
             await cart.save();
-            const updatedCart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name imageURL price cgst sgst igst');
+            const updatedCart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name imageURL price cgst sgst igst packagingCharge');
             const totals = await calculateCartTotals(updatedCart);
             res.json({ ...updatedCart.toObject(), ...totals });
         } else {
@@ -383,7 +387,7 @@ const removeCouponFromCart = async (req, res, next) => {
 const getCartBill = async (req, res, next) => {
     try {
         const { lat, lng } = req.query;
-        const cart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name price cgst sgst igst hsnCode');
+        const cart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name price cgst sgst igst hsnCode packagingCharge');
 
         if (!cart) {
             return res.json({
@@ -392,13 +396,14 @@ const getCartBill = async (req, res, next) => {
                 discount: 0,
                 totalTax: 0,
                 taxBreakdown: { cgstTotal: 0, sgstTotal: 0, igstTotal: 0 }, // Add Breakdown
+                packagingTotal: 0,
                 finalTotal: 0,
                 coupon: null
             });
         }
 
         // Use helper to get tax and item totals
-        const { itemsTotal, totalTax, taxBreakdown } = await calculateCartTotals(cart);
+        const { itemsTotal, totalTax, taxBreakdown, packagingTotal } = await calculateCartTotals(cart);
 
         let discount = 0;
         let couponDetails = null;
@@ -463,7 +468,7 @@ const getCartBill = async (req, res, next) => {
             }
         }
 
-        const finalTotal = itemsTotal + totalTax + shipping - discount;
+        const finalTotal = itemsTotal + totalTax + packagingTotal + shipping - discount;
 
         res.json({
             itemsTotal,
@@ -471,6 +476,7 @@ const getCartBill = async (req, res, next) => {
             discount,
             totalTax,         // Add Tax
             taxBreakdown,     // Add Breakdown
+            packagingTotal,   // Per-unit packaging, GST-free
             finalTotal: finalTotal > 0 ? finalTotal : 0,
             appliedCoupon: couponDetails
         });
@@ -576,7 +582,7 @@ const reorder = async (req, res, next) => {
 
         console.log('[Reorder] Saving cart');
         await cart.save();
-        cart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name imageURL price cgst sgst igst hsnCode');
+        cart = await Cart.findOne({ user: req.user._id }).populate('items.product', 'name imageURL price cgst sgst igst hsnCode packagingCharge');
 
         console.log('[Reorder] Success');
 

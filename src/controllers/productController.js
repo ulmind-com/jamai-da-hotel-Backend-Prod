@@ -132,7 +132,7 @@ const createProduct = async (req, res, next) => {
             type,
             variants,
             isAvailable,
-            hsnCode, cgst, sgst, igst
+            hsnCode, cgst, sgst, igst, packagingCharge
         } = req.body;
 
         // Resolve Category ID if customId provided
@@ -157,7 +157,8 @@ const createProduct = async (req, res, next) => {
             type,
             variants,
             isAvailable,
-            hsnCode, cgst: cgst || 0, sgst: sgst || 0, igst: igst || 0
+            hsnCode, cgst: cgst || 0, sgst: sgst || 0, igst: igst || 0,
+            packagingCharge: packagingCharge || 0
         });
 
         const createdProduct = await product.save();
@@ -180,7 +181,7 @@ const updateProduct = async (req, res, next) => {
             type,
             variants,
             isAvailable,
-            hsnCode, cgst, sgst, igst
+            hsnCode, cgst, sgst, igst, packagingCharge
         } = req.body;
 
         const product = await Product.findOne(resolveId(req.params.id));
@@ -207,6 +208,7 @@ const updateProduct = async (req, res, next) => {
             if (cgst !== undefined) product.cgst = cgst;
             if (sgst !== undefined) product.sgst = sgst;
             if (igst !== undefined) product.igst = igst;
+            if (packagingCharge !== undefined) product.packagingCharge = packagingCharge;
 
             const updatedProduct = await product.save();
             res.json(updatedProduct);

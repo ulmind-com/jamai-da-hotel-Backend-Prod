@@ -88,8 +88,16 @@ const initiateCheckout = async (req, res, next) => {
             }
 
             items[i].price = price; // Update the item payload so tax calculates securely
+            items[i].packagingCharge = productDoc.packagingCharge || 0;
             totalAmount += price * items[i].quantity;
         }
+
+        // Packaging is per unit and GST-free — mirrors addOrderItems so the
+        // amount charged here matches the order that gets saved.
+        const packagingTotal = items.reduce(
+            (sum, item) => sum + (item.packagingCharge || 0) * item.quantity,
+            0
+        );
 
         // 3. Tax Calculation
         let totalTax = 0;
@@ -118,7 +126,7 @@ const initiateCheckout = async (req, res, next) => {
         // 4. Discount Logic
         const cart = await Cart.findOne({ user: req.user._id });
         let discountApplied = 0;
-        let finalAmount = totalAmount + totalTax; // Base + Tax
+        let finalAmount = totalAmount + totalTax + packagingTotal; // Base + Tax + Packaging
 
         if (cart && cart.appliedCoupon) {
             const coupon = await Coupon.findOne({ code: cart.appliedCoupon, isActive: true });
@@ -145,7 +153,7 @@ const initiateCheckout = async (req, res, next) => {
                     if (discount > totalAmount) discount = totalAmount;
 
                     discountApplied = discount;
-                    finalAmount = totalAmount + totalTax - discount;
+                    finalAmount = totalAmount + totalTax + packagingTotal - discount;
                 }
             }
         }
@@ -332,6 +340,7 @@ const addOrderItems = async (req, res, next) => {
             items[i].cgst = productDoc.cgst || 0;
             items[i].sgst = productDoc.sgst || 0;
             items[i].igst = productDoc.igst || 0;
+            items[i].packagingCharge = productDoc.packagingCharge || 0;
 
             console.log(`[Order Debug] Secured Product: ${productDoc.name}, Price: ${basePrice}, Taxes: CGST=${items[i].cgst}, SGST=${items[i].sgst}`);
         }
@@ -376,6 +385,13 @@ const addOrderItems = async (req, res, next) => {
         // Let's rely on the passed `totalAmount` as Item Total for now (or recalculate it).
         // Recalculating is safer.
         const calculatedItemTotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+        // Packaging is charged per unit and carries no GST, so it sits outside
+        // totalAmount and is added straight onto the final payable.
+        const packagingTotal = items.reduce(
+            (sum, item) => sum + (item.packagingCharge || 0) * item.quantity,
+            0
+        );
 
         // Overwrite totalAmount and recalculate final
         totalAmount = calculatedItemTotal;
@@ -511,7 +527,7 @@ const addOrderItems = async (req, res, next) => {
             calculatedDeliveryFee = parseInt(req.body.deliveryFee) || 0;
         }
 
-        finalAmount = totalAmount + totalTax + calculatedDeliveryFee - discountApplied;
+        finalAmount = totalAmount + totalTax + packagingTotal + calculatedDeliveryFee - discountApplied;
         if (finalAmount < 0) finalAmount = 0;
 
         // ---------------------------------------------------------
@@ -597,6 +613,7 @@ const addOrderItems = async (req, res, next) => {
             sgstTotal,
             igstTotal,
             deliveryFee: calculatedDeliveryFee,
+            packagingTotal,
 
             discountApplied: appliedCouponCode ? discountApplied : 0,
             finalAmount,

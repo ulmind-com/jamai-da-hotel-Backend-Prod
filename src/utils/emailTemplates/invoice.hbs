@@ -249,6 +249,12 @@
             <span>Total Taxes:</span>
             <span>{{totalTax}}</span>
         </div>
+        {{#if packaging}}
+        <div class="total-row">
+            <span>Packaging Charge:</span>
+            <span>{{packaging}}</span>
+        </div>
+        {{/if}}
         <div class="total-row">
             <span>Delivery Fee:</span>
             <span>{{deliveryFee}}</span>

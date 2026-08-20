@@ -160,6 +160,8 @@
             <div class="billing-summary">
                 <div class="billing-row"><span>Item Total</span><span>₹{{subtotal}}</span></div>
                 <div class="billing-row"><span>Taxes</span><span>₹{{tax}}</span></div>
+                {{#if packaging}}<div class="billing-row"><span>Packaging Charge</span><span>₹{{packaging}}</span></div>
+                {{/if}}
                 {{#if deliveryFee}}<div class="billing-row"><span>Delivery Fee</span><span>₹{{deliveryFee}}</span></div>
                 {{/if}}
                 {{#if discount}}<div class="billing-row" style="color: #60b246;">

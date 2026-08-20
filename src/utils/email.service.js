@@ -189,6 +189,7 @@ const sendOrderStatusEmail = async (order, user) => {
     subtotal: order.totalAmount.toFixed(2),
     tax: order.taxAmount.toFixed(2),
     deliveryFee: (order.deliveryFee || 0).toFixed(2),
+    packaging: (order.packagingTotal || 0) > 0 ? (order.packagingTotal).toFixed(2) : '',
     discount: (order.discountApplied || 0).toFixed(2),
     total: order.finalAmount.toFixed(2),
 
@@ -244,6 +245,7 @@ const generateOrderInvoicePDF = async (order, user) => {
     totalAmount: order.totalAmount.toFixed(2),
     discountApplied: order.discountApplied.toFixed(2),
     deliveryFee: (order.deliveryFee || 0).toFixed(2),
+    packaging: (order.packagingTotal || 0) > 0 ? (order.packagingTotal).toFixed(2) : '',
     finalAmount: order.finalAmount.toFixed(2),
     finalAmountWords: numberToWords(Math.round(order.finalAmount)) + ' Rupees Only',
     paymentStatus: order.paymentStatus,
@@ -299,7 +301,8 @@ const sendOrderDeliveredWithInvoice = async (order, user, existingPdfBuffer = nu
     // Billing
     subtotal: order.totalAmount.toFixed(2),
     tax: order.taxAmount.toFixed(2),
-    deliveryFee: (order.deliveryFee || 0).toFixed(2), // Assuming deliveryFee exists on order or is calculated
+    deliveryFee: (order.deliveryFee || 0).toFixed(2),
+    packaging: (order.packagingTotal || 0) > 0 ? (order.packagingTotal).toFixed(2) : '',
     discount: (order.discountApplied || 0).toFixed(2),
     total: order.finalAmount.toFixed(2),
 

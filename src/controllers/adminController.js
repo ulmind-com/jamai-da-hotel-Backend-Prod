@@ -448,6 +448,7 @@ const createPOSOrder = async (req, res, next) => {
             orderStatus: 'DELIVERED', // Automatically fulfilled
             customerName: customerName || 'Walk-in Customer',
             customerMobile: customerMobile || '',
+            createdBy: req.user?._id,
         });
 
         const createdOrder = await newOrder.save();

@@ -14,6 +14,12 @@ const orderSchema = new mongoose.Schema(
         },
         customerName: { type: String }, // For POS Walk-in
         customerMobile: { type: String }, // For POS Walk-in
+        // Staff member who rang up a POS bill (unset for online orders).
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: false,
+        },
         orderType: {
             type: String,
             enum: ['ONLINE', 'POS'],

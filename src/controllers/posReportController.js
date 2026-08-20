@@ -16,7 +16,18 @@ const resolveRange = (fromStr, toStr) => {
 
 // Build the offline + online report data for a range.
 const buildReport = async (from, to) => {
-    // ── Offline (settled POS bills) ──
+    // ── Offline sales ──
+    // Two sources: bills rung up on the POS terminal (Order/orderType POS), and
+    // settled bills from the retired KOT/table flow (kept so history still adds up).
+    const posOrders = await Order.find({
+        orderType: 'POS',
+        createdAt: { $gte: from, $lte: to },
+        orderStatus: { $ne: 'CANCELLED' },
+    })
+        .populate('items.product', 'name')
+        .populate('createdBy', 'name')
+        .sort({ createdAt: 1 });
+
     const bills = await PosBill.find({
         status: 'settled',
         settledAt: { $gte: from, $lte: to },
@@ -30,23 +41,52 @@ const buildReport = async (from, to) => {
     const itemMap = {};
     let offlineTotal = 0, offlineTax = 0, offlineDiscount = 0;
 
-    for (const b of bills) {
-        offlineTotal += b.total;
-        offlineTax += b.taxAmount || 0;
-        offlineDiscount += b.discountAmount || 0;
-        const pm = b.paymentMethod || 'CASH';
-        if (byPayment[pm]) { byPayment[pm].count += 1; byPayment[pm].total += b.total; }
+    // One accumulator for both shapes, so totals stay consistent.
+    const tally = ({ total, tax, discount, paymentMethod, staffName, items }) => {
+        offlineTotal += total || 0;
+        offlineTax += tax || 0;
+        offlineDiscount += discount || 0;
 
-        const staffName = b.settledBy?.name || b.createdBy?.name || 'Unknown';
-        if (!byStaff[staffName]) byStaff[staffName] = { count: 0, total: 0 };
-        byStaff[staffName].count += 1;
-        byStaff[staffName].total += b.total;
+        const pm = paymentMethod || 'CASH';
+        if (byPayment[pm]) { byPayment[pm].count += 1; byPayment[pm].total += total || 0; }
 
-        for (const it of b.items) {
-            if (!itemMap[it.name]) itemMap[it.name] = { quantity: 0, amount: 0 };
-            itemMap[it.name].quantity += it.quantity;
-            itemMap[it.name].amount += (it.price || 0) * it.quantity;
+        const who = staffName || 'Unknown';
+        if (!byStaff[who]) byStaff[who] = { count: 0, total: 0 };
+        byStaff[who].count += 1;
+        byStaff[who].total += total || 0;
+
+        for (const it of items) {
+            const name = it.name || 'Item';
+            if (!itemMap[name]) itemMap[name] = { quantity: 0, amount: 0 };
+            itemMap[name].quantity += it.quantity || 0;
+            itemMap[name].amount += (it.price || 0) * (it.quantity || 0);
         }
+    };
+
+    for (const o of posOrders) {
+        tally({
+            total: o.finalAmount,
+            tax: o.taxAmount,
+            discount: o.discountApplied,
+            paymentMethod: o.paymentMethod,
+            staffName: o.createdBy?.name,
+            items: (o.items || []).map((it) => ({
+                name: it.product?.name,
+                quantity: it.quantity,
+                price: it.price,
+            })),
+        });
+    }
+
+    for (const b of bills) {
+        tally({
+            total: b.total,
+            tax: b.taxAmount,
+            discount: b.discountAmount,
+            paymentMethod: b.paymentMethod,
+            staffName: b.settledBy?.name || b.createdBy?.name,
+            items: b.items,
+        });
     }
 
     const topItems = Object.entries(itemMap)
@@ -66,21 +106,32 @@ const buildReport = async (from, to) => {
         range: { from, to },
         offline: {
             totalSales: Math.round(offlineTotal * 100) / 100,
-            billCount: bills.length,
+            billCount: posOrders.length + bills.length,
             taxCollected: Math.round(offlineTax * 100) / 100,
             discountGiven: Math.round(offlineDiscount * 100) / 100,
             byPayment,
             byStaff: Object.entries(byStaff).map(([name, v]) => ({ name, ...v })),
             topItems,
-            bills: bills.map((b) => ({
-                billNumber: b.billNumber,
-                tableName: b.tableName,
-                total: b.total,
-                paymentMethod: b.paymentMethod,
-                settledBy: b.settledBy?.name || '',
-                createdBy: b.createdBy?.name || '',
-                settledAt: b.settledAt,
-            })),
+            bills: [
+                ...posOrders.map((o) => ({
+                    billNumber: o.customId,
+                    tableName: o.customerName || 'Walk-in',
+                    total: o.finalAmount,
+                    paymentMethod: o.paymentMethod,
+                    settledBy: o.createdBy?.name || '',
+                    createdBy: o.createdBy?.name || '',
+                    settledAt: o.createdAt,
+                })),
+                ...bills.map((b) => ({
+                    billNumber: b.billNumber,
+                    tableName: b.tableName,
+                    total: b.total,
+                    paymentMethod: b.paymentMethod,
+                    settledBy: b.settledBy?.name || '',
+                    createdBy: b.createdBy?.name || '',
+                    settledAt: b.settledAt,
+                })),
+            ].sort((a, b) => new Date(a.settledAt) - new Date(b.settledAt)),
         },
         online: {
             totalSales: Math.round(onlineTotal * 100) / 100,
@@ -183,12 +234,15 @@ const getPosDashboard = async (req, res, next) => {
             createdAt: { $gte: from, $lte: to },
         }).populate('items.product', 'name').select('finalAmount items');
 
-        // Offline = legacy POS orders + new settled bills.
+        // Offline = POS terminal bills + legacy KOT/table bills.
         const posOrders = await Order.find({
             orderType: 'POS',
             orderStatus: { $ne: 'CANCELLED' },
             createdAt: { $gte: from, $lte: to },
-        }).populate('items.product', 'name').select('finalAmount items customId paymentMethod customerName createdAt');
+        })
+            .populate('items.product', 'name')
+            .populate('createdBy', 'name')
+            .select('finalAmount items customId paymentMethod customerName createdAt createdBy');
 
         const bills = await PosBill.find({ status: 'settled', settledAt: { $gte: from, $lte: to } })
             .populate('settledBy', 'name');
@@ -213,10 +267,10 @@ const getPosDashboard = async (req, res, next) => {
 
         const toTop = (map) => Object.entries(map).map(([name, v]) => ({ name, ...v })).sort((a, b) => b.quantity - a.quantity).slice(0, 8);
 
-        // Unified settled-bill feed (new bills + legacy POS orders).
+        // Unified bill feed (POS terminal bills + legacy KOT/table bills).
         const billFeed = [
-            ...bills.map((b) => ({ ref: b.billNumber, table: b.tableName || '—', when: b.settledAt, payment: b.paymentMethod, by: b.settledBy?.name || '—', amount: b.total, source: 'POS' })),
-            ...posOrders.map((o) => ({ ref: o.customId, table: '—', when: o.createdAt, payment: o.paymentMethod, by: o.customerName || 'Walk-in', amount: o.finalAmount, source: 'Legacy' })),
+            ...posOrders.map((o) => ({ ref: o.customId, table: o.customerName || 'Walk-in', when: o.createdAt, payment: o.paymentMethod, by: o.createdBy?.name || '—', amount: o.finalAmount, source: 'POS' })),
+            ...bills.map((b) => ({ ref: b.billNumber, table: b.tableName || '—', when: b.settledAt, payment: b.paymentMethod, by: b.settledBy?.name || '—', amount: b.total, source: 'Legacy' })),
         ].sort((a, b) => new Date(b.when) - new Date(a.when));
 
         res.json({

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Verification Code</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .hero { background: linear-gradient(135deg, #ff5722 0%, #ff8a65 100%); padding: 36px 20px; text-align: center; color: white; }
+        .hero h1 { margin: 0; font-size: 24px; font-weight: 700; }
+        .content { padding: 36px 30px; text-align: center; color: #333; }
+        .content h2 { margin: 0 0 8px; font-size: 20px; }
+        .content p { color: #555; line-height: 1.6; margin: 8px 0; }
+        .otp-box { display: inline-block; margin: 24px 0; padding: 18px 32px; background: #fff5f2; border: 2px dashed #ff5722; border-radius: 12px; }
+        .otp-code { font-size: 40px; font-weight: 800; letter-spacing: 12px; color: #ff5722; margin: 0; padding-left: 12px; }
+        .muted { font-size: 13px; color: #999; }
+        .footer { background-color: #fafafa; padding: 18px; text-align: center; font-size: 12px; color: #999; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Haldia Cloud Kitchen &amp; Restaurant</h1>
+        </div>
+        <div class="content">
+            <h2>Verify your email</h2>
+            <p>Use the code below to complete your sign up. This helps us keep your account secure.</p>
+            <div class="otp-box">
+                <p class="otp-code">{{otp}}</p>
+            </div>
+            <p class="muted">This code expires in <strong>10 minutes</strong>. Please don't share it with anyone.</p>
+            <p class="muted">If you didn't request this, you can safely ignore this email.</p>
+        </div>
+        <div class="footer">
+            <p>&copy; {{year}} Haldia Cloud Kitchen &amp; Restaurant. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

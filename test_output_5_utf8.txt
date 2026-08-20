@@ -1,0 +1,426 @@
+﻿
+> food-delivery-app@1.0.0 test
+> npx cross-env NODE_ENV=test jest --testTimeout=30000
+
+  console.log
+    [dotenv@17.3.1] injecting env (9) from .env -- tip: ÔÜí´©Å secrets for agents: https://dotenvx.com/as2
+
+      at _log (node_modules/dotenv/lib/main.js:139:11)
+
+  console.log
+    MongoDB Connected: localhost
+
+      at log (src/config/db.js:6:17)
+
+  console.log
+    [Model:User] Generating CustomID...
+
+      at model.log (src/models/User.js:61:21)
+          at async Promise.all (index 0)
+
+node.exe : (node:5712) 
+[MONGOOSE] Warning: mongoose: 
+the `new` option for 
+`findOneAndUpdate()` and 
+`findOneAndReplace()` is 
+deprecated. Use 
+`returnDocument: 'after'` 
+instead.
+At E:\Node JS\npm.ps1:29 char:3
++   & $NODE_EXE $NPM_CLI_JS 
+$args
++   
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : N 
+   otSpecified: ((node:5712) [  
+  MO...fter'` instead.:String   
+ ) [], RemoteException
+    + FullyQualifiedErrorId : N 
+   ativeCommandError
+ 
+(Use `node --trace-warnings 
+...` to show where the warning 
+was created)
+  console.log
+    [Model:User] CustomID Generated: USR-1
+
+      at model.log (src/models/User.js:69:21)
+          at async Promise.all (index 0)
+
+  console.log
+    [Model:User] Password Hook Triggered
+
+      at model.log (src/models/User.js:84:13)
+          at async Promise.all (index 0)
+
+  console.log
+    [Model:User] Hashing Password...
+
+      at model.log (src/models/User.js:91:17)
+          at async Promise.all (index 0)
+
+  console.log
+    [Model:User] Password Hashed.
+
+      at model.log (src/models/User.js:94:17)
+          at async Promise.all (index 0)
+
+[0mPOST /api/auth/register [32m201[0m 251.407 ms - 279[0m
+[0mPOST /api/auth/register [32m201[0m 251.407 ms - 279[0m
+[0mPOST /api/auth/login [32m200[0m 81.147 ms - 276[0m
+[0mPOST /api/auth/login [32m200[0m 81.147 ms - 276[0m
+  console.log
+    Email 'Welcome to Food Delivery App! ­ƒìö' sent to admin@test.com
+
+      at log (src/utils/email.service.js:46:13)
+
+  console.log
+    [Model:User] Generating CustomID...
+
+      at model.log (src/models/User.js:61:21)
+          at async Promise.all (index 0)
+
+(node:5712) [MONGOOSE] Warning: 
+mongoose: the `new` option for 
+`findOneAndUpdate()` and 
+`findOneAndReplace()` is 
+deprecated. Use 
+`returnDocument: 'after'` 
+instead.
+  console.log
+    [Model:User] CustomID Generated: USR-2
+
+      at model.log (src/models/User.js:69:21)
+          at async Promise.all (index 0)
+
+  console.log
+    [Model:User] Password Hook Triggered
+
+      at model.log (src/models/User.js:84:13)
+          at async Promise.all (index 0)
+
+  console.log
+    [Model:User] Hashing Password...
+
+      at model.log (src/models/User.js:91:17)
+          at async Promise.all (index 0)
+
+  console.log
+    [Model:User] Password Hashed.
+
+      at model.log (src/models/User.js:94:17)
+          at async Promise.all (index 0)
+
+[0mPOST /api/auth/register [32m201[0m 105.266 ms - 285[0m
+[0mPOST /api/auth/register [32m201[0m 105.266 ms - 285[0m
+  console.log
+    Email 'Welcome to Food Delivery App! ­ƒìö' sent to customer@test.com
+
+      at log (src/utils/email.service.js:46:13)
+
+[0mPOST /api/auth/login [32m200[0m 89.868 ms - 285[0m
+[0mPOST /api/auth/login [32m200[0m 89.868 ms - 285[0m
+  console.log
+    [AuthMiddleware] User: admin@test.com, Role: Admin
+
+      at log (src/middleware/authMiddleware.js:17:21)
+
+(node:5712) [MONGOOSE] Warning: 
+mongoose: the `new` option for 
+`findOneAndUpdate()` and 
+`findOneAndReplace()` is 
+deprecated. Use 
+`returnDocument: 'after'` 
+instead.
+[0mPOST /api/categories [31m500[0m 58.241 ms - 893[0m
+[0mPOST /api/categories [31m500[0m 58.241 ms - 893[0m
+  console.log
+    [Test] Category Response: 500 {
+      message: 'next is not a function',
+      stack: 'TypeError: next is not a function\n' +
+        '    at model.next (E:\\Projects-New\\Food Delivery App\\src\\models\\Category.js:43:9)\n' +
+        '    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+        '    at Kareem.execPre (E:\\Projects-New\\Food Delivery App\\node_modules\\kareem\\index.js:70:24)\n' +
+        '    at model.$__save (E:\\Projects-New\\Food Delivery App\\node_modules\\mongoose\\lib\\model.js:371:5)\n' +
+        '    at model.save (E:\\Projects-New\\Food Delivery App\\node_modules\\mongoose\\lib\\model.js:614:5)\n' +
+        '    at E:\\Projects-New\\Food Delivery App\\node_modules\\mongoose\\lib\\model.js:2750:9\n' +
+        '    at async Promise.all (index 0)\n' +
+        '    at Function.create (E:\\Projects-New\\Food Delivery App\\node_modules\\mongoose\\lib\\model.js:2735:11)\n' +
+        '    at createCategory (E:\\Projects-New\\Food Delivery App\\src\\controllers\\categoryController.js:69:26)'
+    }
+
+      at Object.log (tests/grand_e2e.test.js:131:17)
+
+  console.log
+    [AuthMiddleware] User: admin@test.com, Role: Admin
+
+      at log (src/middleware/authMiddleware.js:17:21)
+
+[0mPOST /api/menu [31m500[0m 13.732 ms - 1295[0m
+[0mPOST /api/menu [31m500[0m 13.732 ms - 1295[0m
+  console.log
+    [Test] Product Response: 500 {
+      message: 'Product validation failed: category: Path `category` is required.',
+      stack: 'ValidationError: Product validation failed: category: Path `category` is required.\n' +
+        '    at model.Document.invalidate (E:\\Projects-New\\Food Delivery App\\node_modules\\mongoose\\lib\\document.js:3405:32)\n' +
+        '    at validatePath (E:\\Projects-New\\Food Delivery App\\node_modules\\mongoose\\lib\\document.js:3177:13)\n' +
+        '    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n' +
+        '    at async Promise.all (index 2)\n' +
+        '    at model.$__validate (E:\\Projects-New\\Food Delivery App\\node_modules\\mongoose\\lib\\document.js:3118:3)\n' +
+        '    at model.validate (E:\\Projects-New\\Food Delivery App\\node_modules\\mongoose\\lib\\document.js:2687:5)\n' +
+        '    at model.validateBeforeSavePreSave (E:\\Projects-New\\Food Delivery App\\node_modules\\mongoose\\lib\\plugins\\validateBeforeSave.js:39:5)\n' +
+        '    at Kareem.execPre (E:\\Projects-New\\Food Delivery App\\node_modules\\kareem\\index.js:70:24)\n' +
+        '    at model.$__save (E:\\Projects-New\\Food Delivery App\\node_modules\\mongoose\\lib\\model.js:371:5)\n' +
+        '    at model.save (E:\\Projects-New\\Food Delivery App\\node_modules\\mongoose\\lib\\model.js:614:5)\n' +
+        '    at createProduct (E:\\Projects-New\\Food Delivery App\\src\\controllers\\productController.js:128:32)'
+    }
+
+      at Object.log (tests/grand_e2e.test.js:151:17)
+
+  console.log
+    [AuthMiddleware] User: admin@test.com, Role: Admin
+
+      at log (src/middleware/authMiddleware.js:17:21)
+
+  console.log
+    Starting Coupon Blast for TEST50
+
+      at log (src/controllers/couponController.js:59:21)
+
+[0mPOST /api/coupons [32m201[0m 66.956 ms - 357[0m
+[0mPOST /api/coupons [32m201[0m 66.956 ms - 357[0m
+[0mPOST /api/orders/calc-fee [32m200[0m 1.234 ms - 61[0m
+[0mPOST /api/orders/calc-fee [32m200[0m 1.234 ms - 61[0m
+  console.log
+    [AuthMiddleware] User: customer@test.com, Role: Customer
+
+      at log (src/middleware/authMiddleware.js:17:21)
+
+  console.log
+    Email '­ƒÄë Flash Sale! Use Code TEST50' sent to admin@test.com
+
+      at log (src/utils/email.service.js:46:13)
+          at async Promise.all (index 0)
+
+  console.log
+    Email '­ƒÄë Flash Sale! Use Code TEST50' sent to customer@test.com
+
+      at log (src/utils/email.service.js:46:13)
+          at async Promise.all (index 1)
+
+  console.log
+    Sent batch 1
+
+      at log (src/controllers/couponController.js:69:29)
+
+  console.log
+    Coupon Blast Sent Successfully
+
+      at log (src/controllers/couponController.js:71:25)
+
+[0mPOST /api/coupons/validate [32m200[0m 46.951 ms - 86[0m
+[0mPOST /api/coupons/validate [32m200[0m 46.951 ms - 86[0m
+  console.log
+    [AuthMiddleware] User: customer@test.com, Role: Customer
+
+      at log (src/middleware/authMiddleware.js:17:21)
+
+[0mPOST /api/orders [33m400[0m 11.084 ms - 118[0m
+[0mPOST /api/orders [33m400[0m 11.084 ms - 118[0m
+  console.log
+    [AuthMiddleware] User: admin@test.com, Role: Admin
+
+      at log (src/middleware/authMiddleware.js:17:21)
+
+[0mPUT /api/admin/orders/undefined/status [33m404[0m 14.403 ms - 247[0m
+[0mPUT /api/admin/orders/undefined/status [33m404[0m 14.403 ms - 247[0m
+FAIL tests/grand_e2e.test.js
+  Food Delivery System E2E
+    ÔêÜ 1. Register Admin (295 
+ms)
+    ÔêÜ 2. Login Admin (86 ms)
+    ÔêÜ 3. Register Customer 
+(136 ms)
+    ÔêÜ 4. Login Customer (100 
+ms)
+    ├ù 5. Create Category (71 
+ms)
+    ├ù 6. Create Product (21 ms)
+    ÔêÜ 7. Create Coupon (75 ms)
+    ÔêÜ 8. Check Delivery Fee 
+(331 ms)
+    ÔêÜ 9. Apply Coupon (58 ms)
+    ÔêÜ 10. Initialize Payment 
+(Mocked) (1 ms)
+    ├ù 11. Place Order (21 ms)
+    ÔêÜ 12. Verify Payment 
+(Mocked) (1 ms)
+    ├ù 13. Update Status Flow 
+(26 ms)
+    ÔêÜ 14. Verify Email 
+Trigger (1 ms)
+    ÔêÜ 15. Add Review
+    ÔêÜ 16. Admin Dashboard (1 
+ms)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 5. Create Category
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 201
+    Received: 500
+
+    [0m [90m 130 |[39m       
+      })[33m;[39m
+     [90m 131 |[39m         co
+nsole[33m.[39mlog([32m`[Test]
+ Category Response: ${res.status
+Code}`[39m[33m,[39m 
+res[33m.[39mbody)[33m;[39m
+    [31m[1m>[22m[39m[90m 
+132 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+Be([35m201[39m)[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 133 |[39m         
+categoryId [33m=[39m res[33m.
+[39mbody[33m.[39m_id[33m;[3
+9m
+     [90m 134 |[39m         co
+nsole[33m.[39mlog([32m`[Test]
+ Category Created: 
+${categoryId}`[39m)[33m;[39m
+     [90m 135 |[39m         
+[36mif[39m 
+(res[33m.[39mstatusCode 
+[33m!==[39m [35m201[39m) con
+sole[33m.[39mlog([32m`[Test] 
+Category Failed: ${res.statusCod
+e}`[39m[33m,[39m res[33m.[3
+9mbody)[33m;[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:132:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 6. Create Product
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 201
+    Received: 500
+
+    [0m [90m 150 |[39m       
+      })[33m;[39m
+     [90m 151 |[39m         co
+nsole[33m.[39mlog([32m`[Test]
+ Product Response: ${res.statusC
+ode}`[39m[33m,[39m 
+res[33m.[39mbody)[33m;[39m
+    [31m[1m>[22m[39m[90m 
+152 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+Be([35m201[39m)[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 153 |[39m         
+productId [33m=[39m res[33m.
+[39mbody[33m.[39m_id[33m;[39
+m
+     [90m 154 |[39m         co
+nsole[33m.[39mlog([32m`[Test]
+ Product Created: ${productId} 
+with Category: 
+${categoryId}`[39m)[33m;[39m
+     [90m 155 |[39m     
+})[33m;[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:152:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 11. Place Order
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 201
+    Received: 400
+
+    [0m [90m 251 |[39m       
+          paymentId[33m:[39m 
+[32m'pay_test_123'[39m
+     [90m 252 |[39m           
+  })[33m;[39m
+    [31m[1m>[22m[39m[90m 
+253 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+Be([35m201[39m)[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 254 |[39m         
+orderId [33m=[39m res[33m.[3
+9mbody[33m.[39m_id[33m;[39m
+     [90m 255 |[39m         ex
+pect(res[33m.[39mbody[33m.[3
+9morderStatus)[33m.[39mtoBe([
+32m'PLACED'[39m)[33m;[39m
+     [90m 256 |[39m     
+})[33m;[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:253:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 13. Update Status Flow
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 200
+    Received: 404
+
+    [0m [90m 271 |[39m       
+  [90m// Controller: 
+req.body.orderStatus || 
+req.body.status (check 
+controller)[39m
+     [90m 272 |[39m         
+[90m// Checked controller: 
+line 100 `const newStatus = 
+req.body.status;`[39m
+    [31m[1m>[22m[39m[90m 
+273 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+Be([35m200[39m)[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 274 |[39m         ex
+pect(res[33m.[39mbody[33m.[3
+9morderStatus)[33m.[39mtoBe([
+32m'ACCEPTED'[39m)[33m;[39m
+     [90m 275 |[39m
+     [90m 276 |[39m         
+[90m// Preparing[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:273:32)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 12 
+passed, 16 total
+Snapshots:   0 total
+Time:        3.258 s
+Ran all test suites.

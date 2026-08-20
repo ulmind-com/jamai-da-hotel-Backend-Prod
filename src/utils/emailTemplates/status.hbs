@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order Status Update</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+
+        .order-id {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .stepper::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: #eee;
+            z-index: 1;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 25%;
+        }
+
+        .circle {
+            width: 30px;
+            height: 30px;
+            background-color: #eee;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #999;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #eee;
+        }
+
+        .label {
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+        }
+
+        /* Active State */
+        .step.active .circle {
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 0 0 2px #4CAF50;
+        }
+
+        .step.active .label {
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Completed State */
+        .step.completed .circle {
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 0 0 2px #4CAF50;
+        }
+
+        .step.completed .circle::after {
+            content: '✔';
+            font-size: 14px;
+        }
+
+        .step.completed .label {
+            color: #333;
+        }
+
+        .items-list {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Order Status Update</h2>
+        <p class="order-id">Order #{{orderId}}</p>
+
+        <div class="stepper">
+            <div class="step {{step1State}}">
+                <div class="circle">1</div>
+                <div class="label">Placed</div>
+            </div>
+            <div class="step {{step2State}}">
+                <div class="circle">2</div>
+                <div class="label">Accepted</div>
+            </div>
+            <div class="step {{step3State}}">
+                <div class="circle">3</div>
+                <div class="label">Out for Delivery</div>
+            </div>
+            <div class="step {{step4State}}">
+                <div class="circle">4</div>
+                <div class="label">Delivered</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <p style="font-size: 16px;">Currently: <strong style="color: #4CAF50;">{{currentStatus}}</strong></p>
+        </div>
+    </div>
+</body>
+
+</html>

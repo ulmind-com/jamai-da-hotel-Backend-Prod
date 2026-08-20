@@ -1,0 +1,836 @@
+﻿
+> food-delivery-app@1.0.0 test
+> npx cross-env NODE_ENV=test jest --testTimeout=30000
+
+  console.log
+    [dotenv@17.3.1] injecting env (9) from .env -- tip: ÔÜÖ´©Å  enable debug logging with { debug: true }
+
+      at _log (node_modules/dotenv/lib/main.js:139:11)
+
+  console.log
+    MongoDB Connected: localhost
+
+      at log (src/config/db.js:6:17)
+
+node.exe : (node:12392) 
+[MONGOOSE] Warning: mongoose: 
+the `new` option for 
+`findOneAndUpdate()` and 
+`findOneAndReplace()` is 
+deprecated. Use 
+`returnDocument: 'after'` 
+instead.
+At E:\Node JS\npm.ps1:29 char:3
++   & $NODE_EXE $NPM_CLI_JS 
+$args
++   
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : N 
+   otSpecified: ((node:12392)   
+  [M...fter'` instead.:String   
+ ) [], RemoteException
+    + FullyQualifiedErrorId : N 
+   ativeCommandError
+ 
+(Use `node --trace-warnings 
+...` to show where the warning 
+was created)
+[0mPOST /api/auth/register [31m500[0m 112.338 ms - 883[0m
+[0mPOST /api/auth/register [31m500[0m 112.338 ms - 883[0m
+[0mPOST /api/auth/login [33m401[0m 3.395 ms - 256[0m
+[0mPOST /api/auth/login [33m401[0m 3.395 ms - 256[0m
+(node:12392) [MONGOOSE] 
+Warning: mongoose: the `new` 
+option for `findOneAndUpdate()` 
+and `findOneAndReplace()` is 
+deprecated. Use 
+`returnDocument: 'after'` 
+instead.
+[0mPOST /api/auth/register [31m500[0m 10.900 ms - 883[0m
+[0mPOST /api/auth/register [31m500[0m 10.900 ms - 883[0m
+[0mPOST /api/auth/login [33m401[0m 1.803 ms - 256[0m
+[0mPOST /api/auth/login [33m401[0m 1.803 ms - 256[0m
+  console.error
+    JsonWebTokenError {
+      name: 'JsonWebTokenError',
+      message: 'jwt malformed'
+    }
+
+    [0m [90m 19 |[39m             next()[33m;[39m
+     [90m 20 |[39m         } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 21 |[39m             console[33m.[39merror(error)[33m;[39m
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 22 |[39m             res[33m.[39mstatus([35m401[39m)[33m;[39m
+     [90m 23 |[39m             [36mthrow[39m [36mnew[39m [33mError[39m([32m'Not authorized, token failed'[39m)[33m;[39m [90m// Will be caught by error handler[39m
+     [90m 24 |[39m         }[0m
+
+      at error (src/middleware/authMiddleware.js:21:21)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at next (node_modules/router/lib/route.js:157:13)
+      at Route.dispatch (node_modules/router/lib/route.js:117:3)
+      at handle (node_modules/router/index.js:435:11)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at node_modules/router/index.js:295:15
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at Function.handle (node_modules/router/index.js:186:3)
+      at router (node_modules/router/index.js:60:12)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at node_modules/body-parser/lib/read.js:171:5
+      at invokeCallback (node_modules/raw-body/index.js:238:16)
+      at done (node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (node_modules/raw-body/index.js:287:7)
+
+[0mPOST /api/categories [33m401[0m 10.480 ms - 3412[0m
+[0mPOST /api/categories [33m401[0m 10.480 ms - 3412[0m
+  console.log
+    [Test] Category Response: 401 {
+      message: 'Not authorized, token failed',
+      stack: 'Error: Not authorized, token failed\n' +
+        '    at protect (E:\\Projects-New\\Food Delivery App\\src\\middleware\\authMiddleware.js:23:19)\n' +
+        '    at Layer.handleRequest (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\layer.js:152:17)\n' +
+        '    at next (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\route.js:157:13)\n' +
+        '    at Route.dispatch (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\route.js:117:3)\n' +
+        '    at handle (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:435:11)\n' +
+        '    at Layer.handleRequest (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\layer.js:152:17)\n' +
+        '    at E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:295:15\n' +
+        '    at processParams (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:582:12)\n' +
+        '    at next (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:291:5)\n' +
+        '    at Function.handle (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:186:3)\n' +
+        '    at router (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:60:12)\n' +
+        '    at Layer.handleRequest (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\layer.js:152:17)\n' +
+        '    at trimPrefix (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:342:13)\n' +
+        '    at E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:297:9\n' +
+        '    at processParams (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:582:12)\n' +
+        '    at next (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:291:5)\n' +
+        '    at logger (E:\\Projects-New\\Food Delivery App\\node_modules\\morgan\\index.js:144:5)\n' +
+        '    at Layer.handleRequest (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\layer.js:152:17)\n' +
+        '    at trimPrefix (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:342:13)\n' +
+        '    at E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:297:9\n' +
+        '    at processParams (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:582:12)\n' +
+        '    at next (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:291:5)\n' +
+        '    at logger (E:\\Projects-New\\Food Delivery App\\node_modules\\morgan\\index.js:144:5)\n' +
+        '    at Layer.handleRequest (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\layer.js:152:17)\n' +
+        '    at trimPrefix (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:342:13)\n' +
+        '    at E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:297:9\n' +
+        '    at processParams (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:582:12)\n' +
+        '    at next (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:291:5)\n' +
+        '    at E:\\Projects-New\\Food Delivery App\\node_modules\\body-parser\\lib\\read.js:171:5\n' +
+        '    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)\n' +
+        '    at invokeCallback (E:\\Projects-New\\Food Delivery App\\node_modules\\raw-body\\index.js:238:16)\n' +
+        '    at done (E:\\Projects-New\\Food Delivery App\\node_modules\\raw-body\\index.js:227:7)\n' +
+        '    at IncomingMessage.onEnd (E:\\Projects-New\\Food Delivery App\\node_modules\\raw-body\\index.js:287:7)\n' +
+        '    at IncomingMessage.emit (node:events:518:28)\n' +
+        '    at endReadableNT (node:internal/streams/readable:1698:12)\n' +
+        '    at processTicksAndRejections (node:internal/process/task_queues:90:21)'
+    }
+
+      at Object.log (tests/grand_e2e.test.js:128:17)
+
+  console.error
+    JsonWebTokenError {
+      name: 'JsonWebTokenError',
+      message: 'jwt malformed'
+    }
+
+    [0m [90m 19 |[39m             next()[33m;[39m
+     [90m 20 |[39m         } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 21 |[39m             console[33m.[39merror(error)[33m;[39m
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 22 |[39m             res[33m.[39mstatus([35m401[39m)[33m;[39m
+     [90m 23 |[39m             [36mthrow[39m [36mnew[39m [33mError[39m([32m'Not authorized, token failed'[39m)[33m;[39m [90m// Will be caught by error handler[39m
+     [90m 24 |[39m         }[0m
+
+      at error (src/middleware/authMiddleware.js:21:21)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at next (node_modules/router/lib/route.js:157:13)
+      at Route.dispatch (node_modules/router/lib/route.js:117:3)
+      at handle (node_modules/router/index.js:435:11)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at node_modules/router/index.js:295:15
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at Function.handle (node_modules/router/index.js:186:3)
+      at router (node_modules/router/index.js:60:12)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at node_modules/body-parser/lib/read.js:171:5
+      at invokeCallback (node_modules/raw-body/index.js:238:16)
+      at done (node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (node_modules/raw-body/index.js:287:7)
+
+[0mPOST /api/menu [33m401[0m 6.759 ms - 3412[0m
+[0mPOST /api/menu [33m401[0m 6.759 ms - 3412[0m
+  console.log
+    [Test] Product Response: 401 {
+      message: 'Not authorized, token failed',
+      stack: 'Error: Not authorized, token failed\n' +
+        '    at protect (E:\\Projects-New\\Food Delivery App\\src\\middleware\\authMiddleware.js:23:19)\n' +
+        '    at Layer.handleRequest (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\layer.js:152:17)\n' +
+        '    at next (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\route.js:157:13)\n' +
+        '    at Route.dispatch (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\route.js:117:3)\n' +
+        '    at handle (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:435:11)\n' +
+        '    at Layer.handleRequest (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\layer.js:152:17)\n' +
+        '    at E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:295:15\n' +
+        '    at processParams (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:582:12)\n' +
+        '    at next (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:291:5)\n' +
+        '    at Function.handle (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:186:3)\n' +
+        '    at router (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:60:12)\n' +
+        '    at Layer.handleRequest (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\layer.js:152:17)\n' +
+        '    at trimPrefix (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:342:13)\n' +
+        '    at E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:297:9\n' +
+        '    at processParams (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:582:12)\n' +
+        '    at next (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:291:5)\n' +
+        '    at logger (E:\\Projects-New\\Food Delivery App\\node_modules\\morgan\\index.js:144:5)\n' +
+        '    at Layer.handleRequest (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\layer.js:152:17)\n' +
+        '    at trimPrefix (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:342:13)\n' +
+        '    at E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:297:9\n' +
+        '    at processParams (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:582:12)\n' +
+        '    at next (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:291:5)\n' +
+        '    at logger (E:\\Projects-New\\Food Delivery App\\node_modules\\morgan\\index.js:144:5)\n' +
+        '    at Layer.handleRequest (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\lib\\layer.js:152:17)\n' +
+        '    at trimPrefix (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:342:13)\n' +
+        '    at E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:297:9\n' +
+        '    at processParams (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:582:12)\n' +
+        '    at next (E:\\Projects-New\\Food Delivery App\\node_modules\\router\\index.js:291:5)\n' +
+        '    at E:\\Projects-New\\Food Delivery App\\node_modules\\body-parser\\lib\\read.js:171:5\n' +
+        '    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)\n' +
+        '    at invokeCallback (E:\\Projects-New\\Food Delivery App\\node_modules\\raw-body\\index.js:238:16)\n' +
+        '    at done (E:\\Projects-New\\Food Delivery App\\node_modules\\raw-body\\index.js:227:7)\n' +
+        '    at IncomingMessage.onEnd (E:\\Projects-New\\Food Delivery App\\node_modules\\raw-body\\index.js:287:7)\n' +
+        '    at IncomingMessage.emit (node:events:518:28)\n' +
+        '    at endReadableNT (node:internal/streams/readable:1698:12)\n' +
+        '    at processTicksAndRejections (node:internal/process/task_queues:90:21)'
+    }
+
+      at Object.log (tests/grand_e2e.test.js:148:17)
+
+  console.error
+    JsonWebTokenError {
+      name: 'JsonWebTokenError',
+      message: 'jwt malformed'
+    }
+
+    [0m [90m 19 |[39m             next()[33m;[39m
+     [90m 20 |[39m         } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 21 |[39m             console[33m.[39merror(error)[33m;[39m
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 22 |[39m             res[33m.[39mstatus([35m401[39m)[33m;[39m
+     [90m 23 |[39m             [36mthrow[39m [36mnew[39m [33mError[39m([32m'Not authorized, token failed'[39m)[33m;[39m [90m// Will be caught by error handler[39m
+     [90m 24 |[39m         }[0m
+
+      at error (src/middleware/authMiddleware.js:21:21)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at next (node_modules/router/lib/route.js:157:13)
+      at Route.dispatch (node_modules/router/lib/route.js:117:3)
+      at handle (node_modules/router/index.js:435:11)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at node_modules/router/index.js:295:15
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at Function.handle (node_modules/router/index.js:186:3)
+      at router (node_modules/router/index.js:60:12)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at node_modules/body-parser/lib/read.js:171:5
+      at invokeCallback (node_modules/raw-body/index.js:238:16)
+      at done (node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (node_modules/raw-body/index.js:287:7)
+
+[0mPOST /api/coupons [33m401[0m 5.859 ms - 3412[0m
+[0mPOST /api/coupons [33m401[0m 5.859 ms - 3412[0m
+[0mPOST /api/orders/calc-fee [32m200[0m 0.999 ms - 61[0m
+[0mPOST /api/orders/calc-fee [32m200[0m 0.999 ms - 61[0m
+  console.error
+    JsonWebTokenError {
+      name: 'JsonWebTokenError',
+      message: 'jwt malformed'
+    }
+
+    [0m [90m 19 |[39m             next()[33m;[39m
+     [90m 20 |[39m         } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 21 |[39m             console[33m.[39merror(error)[33m;[39m
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 22 |[39m             res[33m.[39mstatus([35m401[39m)[33m;[39m
+     [90m 23 |[39m             [36mthrow[39m [36mnew[39m [33mError[39m([32m'Not authorized, token failed'[39m)[33m;[39m [90m// Will be caught by error handler[39m
+     [90m 24 |[39m         }[0m
+
+      at error (src/middleware/authMiddleware.js:21:21)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at next (node_modules/router/lib/route.js:157:13)
+      at Route.dispatch (node_modules/router/lib/route.js:117:3)
+      at handle (node_modules/router/index.js:435:11)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at node_modules/router/index.js:295:15
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at Function.handle (node_modules/router/index.js:186:3)
+      at router (node_modules/router/index.js:60:12)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at node_modules/body-parser/lib/read.js:171:5
+      at invokeCallback (node_modules/raw-body/index.js:238:16)
+      at done (node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (node_modules/raw-body/index.js:287:7)
+
+[0mPOST /api/coupons/validate [33m401[0m 7.021 ms - 3412[0m
+[0mPOST /api/coupons/validate [33m401[0m 7.021 ms - 3412[0m
+  console.error
+    JsonWebTokenError {
+      name: 'JsonWebTokenError',
+      message: 'jwt malformed'
+    }
+
+    [0m [90m 19 |[39m             next()[33m;[39m
+     [90m 20 |[39m         } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 21 |[39m             console[33m.[39merror(error)[33m;[39m
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 22 |[39m             res[33m.[39mstatus([35m401[39m)[33m;[39m
+     [90m 23 |[39m             [36mthrow[39m [36mnew[39m [33mError[39m([32m'Not authorized, token failed'[39m)[33m;[39m [90m// Will be caught by error handler[39m
+     [90m 24 |[39m         }[0m
+
+      at error (src/middleware/authMiddleware.js:21:21)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at next (node_modules/router/lib/route.js:157:13)
+      at Route.dispatch (node_modules/router/lib/route.js:117:3)
+      at handle (node_modules/router/index.js:435:11)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at node_modules/router/index.js:295:15
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at Function.handle (node_modules/router/index.js:186:3)
+      at router (node_modules/router/index.js:60:12)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at node_modules/body-parser/lib/read.js:171:5
+      at invokeCallback (node_modules/raw-body/index.js:238:16)
+      at done (node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (node_modules/raw-body/index.js:287:7)
+
+[0mPOST /api/orders [33m401[0m 7.509 ms - 3412[0m
+[0mPOST /api/orders [33m401[0m 7.509 ms - 3412[0m
+  console.error
+    JsonWebTokenError {
+      name: 'JsonWebTokenError',
+      message: 'jwt malformed'
+    }
+
+    [0m [90m 19 |[39m             next()[33m;[39m
+     [90m 20 |[39m         } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 21 |[39m             console[33m.[39merror(error)[33m;[39m
+     [90m    |[39m                     [31m[1m^[22m[39m
+     [90m 22 |[39m             res[33m.[39mstatus([35m401[39m)[33m;[39m
+     [90m 23 |[39m             [36mthrow[39m [36mnew[39m [33mError[39m([32m'Not authorized, token failed'[39m)[33m;[39m [90m// Will be caught by error handler[39m
+     [90m 24 |[39m         }[0m
+
+      at error (src/middleware/authMiddleware.js:21:21)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at next (node_modules/router/lib/route.js:157:13)
+      at Route.dispatch (node_modules/router/lib/route.js:117:3)
+      at handle (node_modules/router/index.js:435:11)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at node_modules/router/index.js:295:15
+      at param (node_modules/router/index.js:600:14)
+      at param (node_modules/router/index.js:610:14)
+      at processParams (node_modules/router/index.js:664:3)
+      at next (node_modules/router/index.js:291:5)
+      at Function.handle (node_modules/router/index.js:186:3)
+      at router (node_modules/router/index.js:60:12)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at logger (node_modules/morgan/index.js:144:5)
+      at Layer.handleRequest (node_modules/router/lib/layer.js:152:17)
+      at trimPrefix (node_modules/router/index.js:342:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at next (node_modules/router/index.js:291:5)
+      at node_modules/body-parser/lib/read.js:171:5
+      at invokeCallback (node_modules/raw-body/index.js:238:16)
+      at done (node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (node_modules/raw-body/index.js:287:7)
+
+[0mPUT /api/admin/orders/undefined/status [33m401[0m 6.545 ms - 3593[0m
+[0mPUT /api/admin/orders/undefined/status [33m401[0m 6.545 ms - 3593[0m
+FAIL tests/grand_e2e.test.js
+  Food Delivery System E2E
+    ├ù 1. Register Admin (158 
+ms)
+    ├ù 2. Login Admin (12 ms)
+    ├ù 3. Register Customer (17 
+ms)
+    ├ù 4. Login Customer (8 ms)
+    ├ù 5. Create Category (17 
+ms)
+    ├ù 6. Create Product (15 ms)
+    ├ù 7. Create Coupon (12 ms)
+    ÔêÜ 8. Check Delivery Fee 
+(8 ms)
+    ├ù 9. Apply Coupon (18 ms)
+    ÔêÜ 10. Initialize Payment 
+(Mocked)
+    ├ù 11. Place Order (14 ms)
+    ÔêÜ 12. Verify Payment 
+(Mocked)
+    ├ù 13. Update Status Flow 
+(12 ms)
+    ÔêÜ 14. Verify Email Trigger
+    ÔêÜ 15. Add Review (1 ms)
+    ÔêÜ 16. Admin Dashboard (1 
+ms)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 1. Register Admin
+
+    expected 500 to be one of 
+201,400
+
+    [0m [90m 83 |[39m        
+ [36mawait[39m mongoose[33m.
+[39mmodel([32m'User'[39m)[33m
+.[39mupdateOne({ 
+email[33m:[39m 
+[32m'admin@test.com'[39m 
+}[33m,[39m { role[33m:[39m 
+[32m'Admin'[39m })[33m;[39m
+     [90m 84 |[39m
+    [31m[1m>[22m[39m[90m 
+85 |[39m         expect(res[33
+m.[39mstatusCode)[33m.[39mtoB
+eOneOf([[35m201[39m[33m,[39m
+ [35m400[39m])[33m;[39m
+     [90m    |[39m            
+                    
+[31m[1m^[22m[39m
+     [90m 86 |[39m     
+})[33m;[39m
+     [90m 87 |[39m
+     [90m 88 |[39m     
+it([32m'2. Login 
+Admin'[39m[33m,[39m 
+[36masync[39m () [33m=>[39m 
+{[0m
+
+      at Object.toBeOneOf 
+(tests/grand_e2e.test.js:85:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 2. Login Admin
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 200
+    Received: 401
+
+    [0m [90m 91 |[39m        
+     password[33m:[39m [32m'p
+assword123'[39m[33m,[39m
+     [90m 92 |[39m         
+})[33m;[39m
+    [31m[1m>[22m[39m[90m 
+93 |[39m         expect(res[33
+m.[39mstatusCode)[33m.[39mtoB
+e([35m200[39m)[33m;[39m
+     [90m    |[39m            
+                    
+[31m[1m^[22m[39m
+     [90m 94 |[39m         
+adminToken [33m=[39m res[33m.
+[39mbody[33m.[39mtoken[33m;
+[39m
+     [90m 95 |[39m         exp
+ect(adminToken)[33m.[39mtoBeDe
+fined()[33m;[39m
+     [90m 96 |[39m     
+})[33m;[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:93:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 3. Register Customer
+
+    expected 500 to be one of 
+201,400
+
+    [0m [90m 104 |[39m       
+      address[33m:[39m { 
+addressLine1[33m:[39m 
+[32m'123 Test 
+St'[39m[33m,[39m 
+city[33m:[39m 
+[32m'Bangalore'[39m 
+}[33m,[39m
+     [90m 105 |[39m         
+})[33m;[39m
+    [31m[1m>[22m[39m[90m 
+106 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+BeOneOf([[35m201[39m[33m,[39
+m [35m400[39m])[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 107 |[39m     
+})[33m;[39m
+     [90m 108 |[39m
+     [90m 109 |[39m     
+it([32m'4. Login 
+Customer'[39m[33m,[39m 
+[36masync[39m () [33m=>[39m 
+{[0m
+
+      at Object.toBeOneOf 
+(tests/grand_e2e.test.js:106:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 4. Login Customer
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 200
+    Received: 401
+
+    [0m [90m 112 |[39m       
+      password[33m:[39m [32m'
+password123'[39m[33m,[39m
+     [90m 113 |[39m         
+})[33m;[39m
+    [31m[1m>[22m[39m[90m 
+114 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+Be([35m200[39m)[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 115 |[39m         
+userToken [33m=[39m res[33m.
+[39mbody[33m.[39mtoken[33m;[
+39m
+     [90m 116 |[39m         ex
+pect(userToken)[33m.[39mtoBeDe
+fined()[33m;[39m
+     [90m 117 |[39m     
+})[33m;[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:114:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 5. Create Category
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 201
+    Received: 401
+
+    [0m [90m 127 |[39m       
+      })[33m;[39m
+     [90m 128 |[39m         co
+nsole[33m.[39mlog([32m`[Test]
+ Category Response: ${res.status
+Code}`[39m[33m,[39m 
+res[33m.[39mbody)[33m;[39m
+    [31m[1m>[22m[39m[90m 
+129 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+Be([35m201[39m)[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 130 |[39m         
+categoryId [33m=[39m res[33m.
+[39mbody[33m.[39m_id[33m;[3
+9m
+     [90m 131 |[39m         co
+nsole[33m.[39mlog([32m`[Test]
+ Category Created: 
+${categoryId}`[39m)[33m;[39m
+     [90m 132 |[39m         
+[36mif[39m 
+(res[33m.[39mstatusCode 
+[33m!==[39m [35m201[39m) con
+sole[33m.[39mlog([32m`[Test] 
+Category Failed: ${res.statusCod
+e}`[39m[33m,[39m res[33m.[3
+9mbody)[33m;[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:129:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 6. Create Product
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 201
+    Received: 401
+
+    [0m [90m 147 |[39m       
+      })[33m;[39m
+     [90m 148 |[39m         co
+nsole[33m.[39mlog([32m`[Test]
+ Product Response: ${res.statusC
+ode}`[39m[33m,[39m 
+res[33m.[39mbody)[33m;[39m
+    [31m[1m>[22m[39m[90m 
+149 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+Be([35m201[39m)[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 150 |[39m         
+productId [33m=[39m res[33m.
+[39mbody[33m.[39m_id[33m;[39
+m
+     [90m 151 |[39m         co
+nsole[33m.[39mlog([32m`[Test]
+ Product Created: ${productId} 
+with Category: 
+${categoryId}`[39m)[33m;[39m
+     [90m 152 |[39m     
+})[33m;[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:149:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 7. Create Coupon
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 201
+    Received: 401
+
+    [0m [90m 167 |[39m       
+          usageLimit[33m:[39m 
+[35m100[39m[33m,[39m
+     [90m 168 |[39m           
+  })[33m;[39m
+    [31m[1m>[22m[39m[90m 
+169 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+Be([35m201[39m)[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 170 |[39m     
+})[33m;[39m
+     [90m 171 |[39m
+     [90m 172 |[39m     
+[90m// Phase C: Pre-Order 
+Checks (Customer)[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:169:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 9. Apply Coupon
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 200
+    Received: 401
+
+    [0m [90m 206 |[39m       
+          cartValue[33m:[39m 
+[35m200[39m[33m,[39m
+     [90m 207 |[39m           
+  })[33m;[39m
+    [31m[1m>[22m[39m[90m 
+208 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+Be([35m200[39m)[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 209 |[39m         ex
+pect(res[33m.[39mbody[33m.[3
+9mdiscount)[33m.[39mtoBe([35m
+50[39m)[33m;[39m
+     [90m 210 |[39m         ex
+pect(res[33m.[39mbody[33m.[3
+9mvalid)[33m.[39mtoBe([36mtru
+e[39m)[33m;[39m
+     [90m 211 |[39m     
+})[33m;[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:208:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 11. Place Order
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 201
+    Received: 401
+
+    [0m [90m 248 |[39m       
+          paymentId[33m:[39m 
+[32m'pay_test_123'[39m
+     [90m 249 |[39m           
+  })[33m;[39m
+    [31m[1m>[22m[39m[90m 
+250 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+Be([35m201[39m)[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 251 |[39m         
+orderId [33m=[39m res[33m.[3
+9mbody[33m.[39m_id[33m;[39m
+     [90m 252 |[39m         ex
+pect(res[33m.[39mbody[33m.[3
+9morderStatus)[33m.[39mtoBe([
+32m'PLACED'[39m)[33m;[39m
+     [90m 253 |[39m     
+})[33m;[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:250:32)
+
+  ÔùÅ Food Delivery System E2E 
+ÔÇ║ 13. Update Status Flow
+
+    
+expect(received).toBe(expected) 
+// Object.is equality
+
+    Expected: 200
+    Received: 401
+
+    [0m [90m 268 |[39m       
+  [90m// Controller: 
+req.body.orderStatus || 
+req.body.status (check 
+controller)[39m
+     [90m 269 |[39m         
+[90m// Checked controller: 
+line 100 `const newStatus = 
+req.body.status;`[39m
+    [31m[1m>[22m[39m[90m 
+270 |[39m         expect(res[3
+3m.[39mstatusCode)[33m.[39mto
+Be([35m200[39m)[33m;[39m
+     [90m     |[39m           
+                     
+[31m[1m^[22m[39m
+     [90m 271 |[39m         ex
+pect(res[33m.[39mbody[33m.[3
+9morderStatus)[33m.[39mtoBe([
+32m'ACCEPTED'[39m)[33m;[39m
+     [90m 272 |[39m
+     [90m 273 |[39m         
+[90m// Preparing[39m[0m
+
+      at Object.toBe 
+(tests/grand_e2e.test.js:270:32)
+
+Test Suites: 1 failed, 1 total
+Tests:       10 failed, 6 
+passed, 16 total
+Snapshots:   0 total
+Time:        2.188 s, estimated 
+3 s
+Ran all test suites.

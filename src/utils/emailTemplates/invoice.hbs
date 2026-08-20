@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Tax Invoice</title>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .column {
+            width: 48%;
+        }
+
+        .label {
+            font-weight: bold;
+            width: 120px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .value {
+            display: inline-block;
+            width: 60%;
+            vertical-align: top;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 11px;
+        }
+
+        th {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: center;
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: right;
+        }
+
+        td.text-left {
+            text-align: left;
+        }
+
+        td.text-center {
+            text-align: center;
+        }
+
+        .footer-totals {
+            float: right;
+            width: 40%;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+
+        .total-row.final {
+            font-weight: bold;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            margin: 5px 0;
+            padding: 10px 0;
+        }
+
+        .footer-text {
+            margin-top: 50px;
+            border-top: 1px solid #ccc;
+            pt: 10px;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .signature {
+            margin-top: 40px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .address-block {
+            margin-bottom: 15px;
+        }
+
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.12;
+            /* Low opacity as requested */
+            width: 60%;
+            z-index: -1;
+            /* grayscale removed */
+        }
+    </style>
+</head>
+
+<body>
+
+    {{#if logo}}
+    <img src="{{logo}}" class="watermark" alt="Watermark">
+    {{/if}}
+
+    <div class="header">TAX INVOICE</div>
+
+    <div class="flex-container">
+        <div class="column">
+            <div class="address-block">
+                <div class="section-title">Invoice To:</div>
+                <div>{{customerName}}</div>
+            </div>
+
+            <div class="row">
+                <span class="label">GSTIN:</span> <span class="value">Unregistered</span>
+            </div>
+            <div class="row">
+                <span class="label">Customer Address:</span>
+                <span class="value">
+                    {{#if customerAddress.addressLine1}}
+                    {{customerAddress.addressLine1}}, {{customerAddress.city}}, {{customerAddress.postalCode}}
+                    {{else}}
+                    {{customerAddress}}
+                    {{/if}}
+                </span>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <span class="label">Order ID:</span> <span class="value">{{orderId}}</span>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="address-block">
+                <div class="section-title">Invoice issued by:</div>
+                <!-- <div>{{restaurantAcc}} (on behalf of:)</div> Removed -->
+                <div><strong>{{restaurantName}}</strong></div>
+            </div>
+
+            <div class="row">
+                <span class="label">Restaurant GSTIN:</span> <span class="value">{{restaurantGST}}</span>
+            </div>
+            <div class="row">
+                <span class="label">Restaurant FSSAI:</span> <span class="value">{{restaurantFSSAI}}</span>
+            </div>
+            <div class="row">
+                <span class="label">Address:</span> <span class="value">{{restaurantAddress}}</span>
+            </div>
+            <div class="row">
+                <span class="label">State:</span> <span class="value">West Bengal</span>
+            </div>
+            <!-- Values row removed as per request -->
+        </div>
+    </div>
+
+    <div class="flex-container" style="border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 10px 0;">
+        <div class="column">
+            <div><strong>Document:</strong> INV</div>
+            <div><strong>Invoice No:</strong> {{invoiceNo}}</div>
+            <div><strong>Date of Invoice:</strong> {{date}}</div>
+        </div>
+        <div class="column" style="text-align: right;">
+            <div><strong>Place of Supply:</strong> West Bengal</div>
+            <div><strong>Service Description:</strong> Restaurant Service</div>
+            <div><strong>Category:</strong> B2C</div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sr No</th>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Amount (Rs.)</th>
+                <th>Discount</th>
+                <th>Net Assessable Value (Rs.)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each items}}
+            <tr>
+                <td class="text-center">{{this.srNo}}</td>
+                <td class="text-left">{{this.name}} - {{this.variant}}</td>
+                <td class="text-center">{{this.quantity}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.amount}}</td>
+                <td>{{this.discount}}</td>
+                <td>{{this.netValue}}</td>
+            </tr>
+            {{/each}}
+            <tr>
+                <td colspan="6" style="text-align: right; font-weight: bold;">Subtotal</td>
+                <td style="font-weight: bold;">{{totalAmount}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer-totals">
+        <div class="total-row">
+            <span>CGST:</span>
+            <span>{{cgst}}</span>
+        </div>
+        <div class="total-row">
+            <span>SGST:</span>
+            <span>{{sgst}}</span>
+        </div>
+        <!-- Only show IGST if value > 0 -->
+        <div class="total-row">
+            <span>IGST:</span>
+            <span>{{igst}}</span>
+        </div>
+        <div class="total-row">
+            <span>Total Taxes:</span>
+            <span>{{totalTax}}</span>
+        </div>
+        <div class="total-row">
+            <span>Delivery Fee:</span>
+            <span>{{deliveryFee}}</span>
+        </div>
+        <div class="total-row">
+            <span>Discount Applied:</span>
+            <span>-{{discountApplied}}</span>
+        </div>
+        <div class="total-row final">
+            <span>Invoice Total:</span>
+            <span>{{finalAmount}}</span>
+        </div>
+    </div>
+
+    <div style="clear: both;"></div>
+
+    <div style="border: 1px solid #333; padding: 5px; margin-top: 20px; font-weight: bold; text-align: center;">
+        Invoice total in words: {{finalAmountWords}}
+    </div>
+
+    <div class="signature">
+        <p>Authorized Signature</p>
+        <p style="font-size: 10px; font-weight: normal; color: #555;">Digitally Signed
+            by<br>{{restaurantName}}<br>{{date}}
+        </p>
+    </div>
+
+    <div class="footer-text">
+        <p>Name: {{restaurantName}}</p>
+        <p>Address: {{restaurantAddress}}</p>
+        <p>GSTIN: {{restaurantGST}} &nbsp;&nbsp;|&nbsp;&nbsp; FSSAI: {{restaurantFSSAI}}</p>
+    </div>
+
+</body>
+
+</html>

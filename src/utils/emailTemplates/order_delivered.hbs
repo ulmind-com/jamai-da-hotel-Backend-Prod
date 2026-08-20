@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f5f7;
+            color: #282c3f;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            /* No border radius for cleaner look? Or minimal */
+            border: 1px solid #e0e0e0;
+        }
+
+        .header {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #fc8019;
+            /* Swiggy Orange Accent */
+        }
+
+        .header img.logo {
+            max-height: 50px;
+            /* No background needed if transparent logo */
+        }
+
+        .header h1 {
+            color: #282c3f;
+            margin: 15px 0 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .greeting {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .order-meta {
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #686b78;
+        }
+
+        .order-meta p {
+            margin: 5px 0;
+        }
+
+        .section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            color: #7e808c;
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .item-list {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        .item-list td {
+            padding: 12px 0;
+            border-bottom: 1px dashed #d4d5d9;
+            vertical-align: top;
+        }
+
+        .item-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+
+        .item-details {
+            display: flex;
+            align-items: center;
+        }
+
+        .item-list td.price {
+            text-align: right;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .item-list .item-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: #282c3f;
+        }
+
+        .item-list .item-qty {
+            font-size: 12px;
+            color: #93959f;
+            margin-top: 4px;
+        }
+
+        .billing-summary {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .billing-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #686b78;
+        }
+
+        .billing-row.total {
+            border-top: 1px solid #d4d5d9;
+            margin-top: 15px;
+            padding-top: 15px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #282c3f;
+        }
+
+        .address-box {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            font-size: 14px;
+            color: #535665;
+            line-height: 1.5;
+        }
+
+        .address-box strong {
+            color: #282c3f;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            background-color: #f4f5f7;
+            padding: 20px;
+            text-align: center;
+            font-size: 11px;
+            color: #93959f;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .download-note {
+            text-align: center;
+            font-size: 13px;
+            color: #fc8019;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header with Logo -->
+        <div class="header">
+            {{#if logo}}
+            <img src="{{logo}}" alt="{{restaurantName}}" class="logo">
+            {{/if}}
+            <!-- Removed 'Order Delivered' text from header to look more like screenshot -->
+        </div>
+
+        <div class="content">
+            <div class="greeting">Hi {{customerName}},</div>
+            <p style="font-size: 14px; color: #535665; line-height: 1.6;">
+                Your order from <strong>{{restaurantName}}</strong> has been delivered.
+            </p>
+
+            <div class="order-meta">
+                <p><strong>Order No:</strong> {{orderId}}</p>
+                <p><strong>Delivered at:</strong> {{orderDate}}</p>
+                <p><strong>Status:</strong> <span style="color: #60b246; font-weight: 700;">Delivered</span></p>
+            </div>
+
+            <!-- Items -->
+            <div class="section-title">Your Order Summary</div>
+            <table class="item-list">
+                {{#each items}}
+                <tr>
+                    <td>
+                        <div class="item-details">
+                            {{#if this.image}}
+                            <img src="{{this.image}}" class="item-img">
+                            {{/if}}
+                            <div>
+                                <div class="item-name">{{this.name}}</div>
+                                <div class="item-qty">Qty: {{this.quantity}}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="price">
+                        ₹{{this.total}}
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+
+            <!-- Billing -->
+            <div class="billing-summary">
+                <div class="billing-row">
+                    <span>Item Total</span>
+                    <span>₹{{subtotal}}</span>
+                </div>
+                <div class="billing-row">
+                    <span>Taxes</span>
+                    <span>₹{{tax}}</span>
+                </div>
+                {{#if deliveryFee}}
+                <div class="billing-row">
+                    <span>Delivery Fee</span>
+                    <span>₹{{deliveryFee}}</span>
+                </div>
+                {{/if}}
+                {{#if discount}}
+                <div class="billing-row" style="color: #60b246;">
+                    <span>Discount</span>
+                    <span>-₹{{discount}}</span>
+                </div>
+                {{/if}}
+                <div class="billing-row total">
+                    <span>Order Total</span>
+                    <span>₹{{total}}</span>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="address-section">
+                <div class="section-title">Delivery To</div>
+                <div class="address-box">
+                    <strong>{{customerName}}</strong>
+                    {{deliveryAddress}}
+                </div>
+            </div>
+
+            <div class="download-note">
+                Your Invoice is attached to this email.
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; {{year}} {{restaurantName}}.</p>
+            <p>{{restaurantAddress}}</p>
+        </div>
+    </div>
+</body>
+
+</html>

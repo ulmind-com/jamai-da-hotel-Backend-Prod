@@ -75,6 +75,7 @@ app.use('/api/coupons', couponRoutes);
 app.use('/api', orderRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/pos', require('./routes/posRoutes'));
+app.use('/api/delivery', require('./routes/deliveryRoutes'));
 // app.use('/api/payment', paymentRoutes); // Deprecated: Integrated into orderRoutes
 app.use('/api/upload', uploadRoutes);
 app.use('/api/reviews', reviewRoutes);

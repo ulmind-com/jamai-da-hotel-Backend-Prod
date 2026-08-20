@@ -1063,6 +1063,10 @@ const updateOrderStatus = async (req, res, next) => {
 
             if (newStatus === 'DELIVERED') {
                 order.paymentStatus = 'PAID'; // Assuming COD becomes PAID on delivery
+                order.deliveredBy = req.user?._id;
+                // Riders confirm cash separately; anything not COD is settled already.
+                order.codCollected =
+                    order.paymentMethod === 'COD' ? !!req.body.codCollected : true;
             }
 
             order.orderStatus = newStatus;

@@ -167,7 +167,7 @@ const createStaffUser = async (req, res, next) => {
             res.status(400);
             throw new Error('Password must be at least 6 characters');
         }
-        const finalRole = ['Manager', 'Admin', 'Customer', 'Waiter'].includes(role) ? role : 'Manager';
+        const finalRole = ['Manager', 'Admin', 'Customer', 'Delivery'].includes(role) ? role : 'Manager';
 
         const exists = await User.findOne({ email });
         if (exists) {

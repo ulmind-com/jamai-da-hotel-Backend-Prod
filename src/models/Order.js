@@ -131,6 +131,14 @@ const orderSchema = new mongoose.Schema(
         cancellationReason: {
             type: String, // Reason for cancellation (User or Admin provided)
         },
+        // Delivery rider who marked the order delivered.
+        deliveredBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: false,
+        },
+        // Whether the rider collected the cash on a COD order.
+        codCollected: { type: Boolean, default: false },
         preparationTime: {
             type: Number, // Estimated preparation time in minutes (Admin provided)
         },

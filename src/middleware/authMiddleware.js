@@ -49,9 +49,9 @@ const staff = (req, res, next) => {
     }
 };
 
-// Allows Admin, Manager and Waiter (KOT-only staff for taking orders).
+// Retained for the legacy KOT/table routes, which are management-only now.
 const kotStaff = (req, res, next) => {
-    if (req.user && ['Admin', 'Manager', 'Waiter'].includes(req.user.role)) {
+    if (req.user && ['Admin', 'Manager'].includes(req.user.role)) {
         next();
     } else {
         res.status(401);
@@ -59,4 +59,14 @@ const kotStaff = (req, res, next) => {
     }
 };
 
-module.exports = { protect, admin, staff, kotStaff };
+// Allows Admin, Manager and Delivery riders (delivery run + status updates).
+const deliveryStaff = (req, res, next) => {
+    if (req.user && ['Admin', 'Manager', 'Delivery'].includes(req.user.role)) {
+        next();
+    } else {
+        res.status(401);
+        throw new Error('Not authorized. Delivery access required.');
+    }
+};
+
+module.exports = { protect, admin, staff, kotStaff, deliveryStaff };

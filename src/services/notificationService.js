@@ -1,12 +1,29 @@
-const axios = require('axios');
+// ─────────────────────────────────────────────────────────────────────────────
+// PUSH NOTIFICATIONS ARE DISABLED.
+//
+// The OneSignal implementation below is kept intact but commented out. Nothing
+// here sends anything: sendPushNotification returns immediately, so the three
+// specialised senders are no-ops and every call site stays safe to run.
+//
+// To switch it back on: uncomment the axios require, the two env constants and
+// the body of sendPushNotification, then remove the early return. The call
+// sites in orderController.js and chatController.js are commented out too and
+// need uncommenting as well.
+// ─────────────────────────────────────────────────────────────────────────────
 
-const ONESIGNAL_APP_ID = process.env.ONESIGNAL_APP_ID;
-const ONESIGNAL_REST_API_KEY = process.env.ONESIGNAL_REST_API_KEY;
+// const axios = require('axios');
+
+// const ONESIGNAL_APP_ID = process.env.ONESIGNAL_APP_ID;
+// const ONESIGNAL_REST_API_KEY = process.env.ONESIGNAL_REST_API_KEY;
 
 /**
- * Helper to send push notification via OneSignal API
+ * Helper to send push notification via OneSignal API — currently disabled.
  */
 const sendPushNotification = async (targetUserIds, header, message, data, options = {}) => {
+  // Disabled — see the note at the top of this file.
+  return;
+
+  /*
   if (!ONESIGNAL_APP_ID || !ONESIGNAL_REST_API_KEY) {
     console.warn("OneSignal credentials missing, skipping push notification.");
     return;
@@ -40,6 +57,7 @@ const sendPushNotification = async (targetUserIds, header, message, data, option
   } catch (err) {
     console.error("OneSignal Error:", err.response ? err.response.data : err.message);
   }
+  */
 };
 
 /**

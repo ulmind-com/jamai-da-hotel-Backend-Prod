@@ -665,7 +665,8 @@ const addOrderItems = async (req, res, next) => {
             io.emit('newOrder', createdOrder);
         }
 
-        // Push Notification for Admins (Loud Alert)
+        // Push Notification for Admins (Loud Alert) — DISABLED, see notificationService.js
+        /*
         try {
             const { sendAdminOrderNotification } = require('../services/notificationService');
             const admins = await User.find({ role: 'Admin' }).select('_id');
@@ -674,6 +675,7 @@ const addOrderItems = async (req, res, next) => {
                 sendAdminOrderNotification(adminIds, createdOrder._id).catch(e => console.error("Admin Push Error:", e));
             }
         } catch (e) { console.error("Failed to fetch admins for Push:", e); }
+        */
 
         const orderResponse = createdOrder.toObject();
 
@@ -1183,7 +1185,8 @@ const updateOrderStatus = async (req, res, next) => {
                     tasks.push(sendOrderStatusEmail(populatedOrder, populatedOrder.customer));
                 }
 
-                // Add Push Notification for Customer Order Status Update
+                // Push Notification for Customer Order Status Update — DISABLED, see notificationService.js
+                /*
                 try {
                     const { sendOrderStatusNotification } = require('../services/notificationService');
                     if (populatedOrder.customer._id) {
@@ -1192,6 +1195,7 @@ const updateOrderStatus = async (req, res, next) => {
                 } catch (e) {
                     console.error("[Notification] OneSignal Push Error (Customer Status Update):", e);
                 }
+                */
 
                 // Note: Promise.allSettled logic below might miss the async PDF tasks if we don't await them.
                 // But we don't want to delay the API response.

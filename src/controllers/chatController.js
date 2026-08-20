@@ -89,7 +89,8 @@ const sendMessageAsUser = async (req, res, next) => {
             message: savedMsg,
         });
 
-        // Push Notification for Admins
+        // Push Notification for Admins — DISABLED, see notificationService.js
+        /*
         try {
             const { sendChatNotification } = require('../services/notificationService');
             const admins = await User.find({ role: 'Admin' }).select('_id');
@@ -99,6 +100,7 @@ const sendMessageAsUser = async (req, res, next) => {
                 sendChatNotification(adminIds, req.user.name, preview).catch(e => console.error("Admin Chat Push Error:", e));
             }
         } catch (e) { console.error("Failed to push chat to admins:", e); }
+        */
 
         // Also emit to user's own room so multiple tabs stay in sync
         emitChatEvent(req, 'chatMessage', `chat_${chat._id}`, {
@@ -199,7 +201,8 @@ const sendMessageAsAdmin = async (req, res, next) => {
             message: savedMsg,
         });
 
-        // Push Notification for User
+        // Push Notification for User — DISABLED, see notificationService.js
+        /*
         try {
             const { sendChatNotification } = require('../services/notificationService');
             if (chat.user) {
@@ -207,6 +210,7 @@ const sendMessageAsAdmin = async (req, res, next) => {
                 sendChatNotification([chat.user.toString()], 'Admin', preview).catch(e => console.error("User Chat Push Error:", e));
             }
         } catch (e) { console.error("Failed to push chat to user:", e); }
+        */
 
         // Also emit to admin room so other admin tabs stay in sync
         emitChatEvent(req, 'chatMessage', 'admin_chat', {

@@ -164,7 +164,7 @@ const reportHtml = (r) => {
         .map((i) => `<tr><td>${i.name}</td><td style="text-align:right">${i.quantity}</td><td style="text-align:right">${money(i.amount)}</td></tr>`).join('') || '<tr><td colspan="3">—</td></tr>';
     return `<div style="font-family:Arial,sans-serif;max-width:640px;margin:auto;color:#222">
       <div style="background:linear-gradient(135deg,#ff5722,#ff8a65);color:#fff;padding:24px;border-radius:10px 10px 0 0">
-        <h2 style="margin:0">Haldia Cloud Kitchen — Sales Report</h2>
+        <h2 style="margin:0">Jamai Da Hotel — Sales Report</h2>
         <p style="margin:4px 0 0">${d(r.range.from)} — ${d(r.range.to)}</p>
       </div>
       <div style="border:1px solid #eee;border-top:none;padding:20px;border-radius:0 0 10px 10px">
@@ -202,7 +202,7 @@ const emailReport = async (req, res, next) => {
         if (pdfBase64) {
             // Email the client-generated premium PDF as an attachment, with a short cover note.
             const cover = `<div style="font-family:Arial,sans-serif;color:#222">
-              <h2 style="color:#ff5722">Haldia Cloud Kitchen — Sales Report</h2>
+              <h2 style="color:#ff5722">Jamai Da Hotel — Sales Report</h2>
               <p>Please find attached the sales report for <b>${rangeLabel}</b>.</p>
               <p style="color:#888;font-size:13px">Offline (POS): Rs.${report.offline.totalSales.toFixed(2)} · ${report.offline.billCount} bills &nbsp;|&nbsp; Online: Rs.${report.online.totalSales.toFixed(2)}</p>
             </div>`;

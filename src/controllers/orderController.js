@@ -35,6 +35,13 @@ const calcFee = async (req, res, next) => {
 // @access  Private
 const initiateCheckout = async (req, res, next) => {
     try {
+        // Nothing to charge if the restaurant is running cash-only.
+        const restaurantConfig = await Restaurant.findOne();
+        if (restaurantConfig && restaurantConfig.isOnlinePaymentEnabled === false) {
+            res.status(400);
+            throw new Error('Online payment is currently unavailable. Please choose Cash on Delivery.');
+        }
+
         let { items, deliveryAddress } = req.body;
 
         // 1. Data Normalization & Validation (Same as addOrderItems)
@@ -203,6 +210,16 @@ const addOrderItems = async (req, res, next) => {
         if (restaurant && !restaurant.isOpen) {
             res.status(400);
             throw new Error('Restaurant is currently closed. Please try again later.');
+        }
+
+        // Online payments can be switched off entirely (cash-only operation).
+        if (
+            req.body.paymentMethod &&
+            req.body.paymentMethod.toUpperCase() === 'ONLINE' &&
+            restaurant && restaurant.isOnlinePaymentEnabled === false
+        ) {
+            res.status(400);
+            throw new Error('Online payment is currently unavailable. Please choose Cash on Delivery.');
         }
 
         // Check COD restrictions

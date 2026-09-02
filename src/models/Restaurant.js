@@ -14,6 +14,11 @@ const restaurantSchema = new mongoose.Schema(
             type: String,
             default: "22:00",
         },
+        // Lets the restaurant run cash-only and switch prepaid on later.
+        isOnlinePaymentEnabled: {
+            type: Boolean,
+            default: true,
+        },
         isCodEnabled: {
             type: Boolean,
             default: true,

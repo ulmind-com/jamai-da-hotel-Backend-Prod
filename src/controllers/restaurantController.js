@@ -26,7 +26,7 @@ const getRestaurant = async (req, res, next) => {
 // @access  Private/Admin
 const updateRestaurant = async (req, res, next) => {
     try {
-        const { isOpen, openingTime, closingTime, isCodEnabled, codStartTime, codEndTime, name, address, location, deliveryRadius, freeDeliveryRadius, chargePerKm, gstIn, fssaiLicense, logo, mobile } = req.body;
+        const { isOpen, openingTime, closingTime, isCodEnabled, isOnlinePaymentEnabled, codStartTime, codEndTime, name, address, location, deliveryRadius, freeDeliveryRadius, chargePerKm, gstIn, fssaiLicense, logo, mobile } = req.body;
         const restaurant = await getRestaurantInstance();
 
         restaurant.isOpen = isOpen !== undefined ? isOpen : restaurant.isOpen;
@@ -34,6 +34,7 @@ const updateRestaurant = async (req, res, next) => {
         restaurant.closingTime = closingTime || restaurant.closingTime;
 
         if (isCodEnabled !== undefined) restaurant.isCodEnabled = isCodEnabled;
+        if (isOnlinePaymentEnabled !== undefined) restaurant.isOnlinePaymentEnabled = isOnlinePaymentEnabled;
         if (codStartTime !== undefined) restaurant.codStartTime = codStartTime;
         if (codEndTime !== undefined) restaurant.codEndTime = codEndTime;
         restaurant.name = name || restaurant.name;

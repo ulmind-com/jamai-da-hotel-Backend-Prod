@@ -793,13 +793,11 @@ const cancelOrder = async (req, res, next) => {
             throw new Error(`Cannot cancel order with status ${order.orderStatus}`);
         }
 
-        // Check Time (3 minutes = 180000 ms)
-        const timeElapsed = Date.now() - new Date(order.createdAt).getTime();
-        const cancelWindow = 3 * 60 * 1000;
-
-        if (timeElapsed > cancelWindow && req.user.role !== 'Admin') {
-            res.status(400);
-            throw new Error('Cancellation period (3 mins) has expired. Order cannot be cancelled.');
+        // Customers cannot cancel at all — once placed, the kitchen owns it.
+        // Cancelling is an admin decision, taken on the phone if need be.
+        if (req.user.role !== 'Admin') {
+            res.status(403);
+            throw new Error('Orders cannot be cancelled once placed. Please call the restaurant.');
         }
 
         const reason = req.body.reason || (req.user.role === 'Admin' ? 'Admin Cancelled' : 'User Cancelled');

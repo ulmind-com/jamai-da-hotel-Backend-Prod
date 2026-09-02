@@ -358,7 +358,7 @@ const getAnalytics = async (req, res, next) => {
 // @access  Private/Admin
 const createPOSOrder = async (req, res, next) => {
     try {
-        const { items, customerName, customerMobile, paymentMethod, discountType, discountValue, applyPackaging } = req.body;
+        const { items, customerName, customerMobile, paymentMethod, discountType, discountValue, applyPackaging, deliveryAddress } = req.body;
 
         // Dine-in needs no boxes; the cashier flags a parcel to charge packaging.
         const chargePackaging = !!applyPackaging;
@@ -459,6 +459,11 @@ const createPOSOrder = async (req, res, next) => {
             orderStatus: 'DELIVERED', // Automatically fulfilled
             customerName: customerName || 'Walk-in Customer',
             customerMobile: customerMobile || '',
+            // Phone-in parcels carry a drop address, typed as one line at the
+            // counter — stored on the usual field so reprints pick it up.
+            deliveryAddress: deliveryAddress
+                ? { addressLine1: String(deliveryAddress).trim(), mobile: customerMobile || '' }
+                : undefined,
             createdBy: req.user?._id,
         });
 

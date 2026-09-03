@@ -76,6 +76,16 @@ const productSchema = new mongoose.Schema(
             type: Boolean,
             default: true,
         },
+        // Serving hours, "HH:mm" in IST. Both blank means always available,
+        // and a window may cross midnight (e.g. 22:00 to 02:00).
+        availableFrom: {
+            type: String,
+            default: '',
+        },
+        availableUntil: {
+            type: String,
+            default: '',
+        },
     },
     {
         timestamps: true,

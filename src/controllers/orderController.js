@@ -7,6 +7,7 @@ const User = require('../models/User'); // Moved to top
 const Product = require('../models/Product'); // Moved to top
 
 const { calculateDeliveryFee, getOrderDistance } = require('../utils/distanceService');
+const { isProductAvailableNow, describeWindow } = require('../utils/availability');
 const { paginate, isPaginated, escapeRegex } = require('../utils/paginate');
 
 // Helper to resolve ID
@@ -92,6 +93,14 @@ const initiateCheckout = async (req, res, next) => {
             const notExpired = !productDoc.discountExpiresAt || new Date(productDoc.discountExpiresAt) > new Date();
             if (hasDiscount && notExpired) {
                 price = Math.round(price * (1 - productDoc.discountPercentage / 100));
+            }
+
+            // Serving hours are a customer-side rule; the counter is exempt.
+            if (!isProductAvailableNow(productDoc)) {
+                res.status(400);
+                throw new Error(
+                    `${productDoc.name} is only available ${describeWindow(productDoc)}. Please remove it from your cart.`
+                );
             }
 
             items[i].price = price; // Update the item payload so tax calculates securely
@@ -351,6 +360,14 @@ const addOrderItems = async (req, res, next) => {
 
             // Overwrite price securely unconditionally
             items[i].price = basePrice;
+
+            // Serving hours are a customer-side rule; the counter is exempt.
+            if (!isProductAvailableNow(productDoc)) {
+                res.status(400);
+                throw new Error(
+                    `${productDoc.name} is only available ${describeWindow(productDoc)}. Please remove it from your cart.`
+                );
+            }
 
             // Apply Tax Config
             items[i].hsnCode = productDoc.hsnCode || '';

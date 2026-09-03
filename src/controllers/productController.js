@@ -132,7 +132,7 @@ const createProduct = async (req, res, next) => {
             type,
             variants,
             isAvailable,
-            hsnCode, cgst, sgst, igst, packagingCharge
+            hsnCode, cgst, sgst, igst, packagingCharge, availableFrom, availableUntil
         } = req.body;
 
         // Resolve Category ID if customId provided
@@ -158,7 +158,9 @@ const createProduct = async (req, res, next) => {
             variants,
             isAvailable,
             hsnCode, cgst: cgst || 0, sgst: sgst || 0, igst: igst || 0,
-            packagingCharge: packagingCharge || 0
+            packagingCharge: packagingCharge || 0,
+            availableFrom: availableFrom || '',
+            availableUntil: availableUntil || ''
         });
 
         const createdProduct = await product.save();
@@ -181,7 +183,7 @@ const updateProduct = async (req, res, next) => {
             type,
             variants,
             isAvailable,
-            hsnCode, cgst, sgst, igst, packagingCharge
+            hsnCode, cgst, sgst, igst, packagingCharge, availableFrom, availableUntil
         } = req.body;
 
         const product = await Product.findOne(resolveId(req.params.id));
@@ -209,6 +211,8 @@ const updateProduct = async (req, res, next) => {
             if (sgst !== undefined) product.sgst = sgst;
             if (igst !== undefined) product.igst = igst;
             if (packagingCharge !== undefined) product.packagingCharge = packagingCharge;
+            if (availableFrom !== undefined) product.availableFrom = availableFrom;
+            if (availableUntil !== undefined) product.availableUntil = availableUntil;
 
             const updatedProduct = await product.save();
             res.json(updatedProduct);

@@ -3,6 +3,7 @@ const Product = require('../models/Product');
 const Coupon = require('../models/Coupon');
 const Order = require('../models/Order');
 const Restaurant = require('../models/Restaurant');
+const { isProductAvailableNow, describeWindow } = require('../utils/availability');
 
 // Helper: Haversine distance formula (fallback)
 function getStraightLineDistance(lat1, lon1, lat2, lon2) {
@@ -137,6 +138,13 @@ const addToCart = async (req, res, next) => {
         if (!product) {
             res.status(404);
             throw new Error('Product not found');
+        }
+
+        // Fail here rather than at checkout, so nobody builds a cart around an
+        // item the kitchen isn't serving right now.
+        if (!isProductAvailableNow(product)) {
+            res.status(400);
+            throw new Error(`${product.name} is only available ${describeWindow(product)}.`);
         }
 
         // Auto-select first variant as default

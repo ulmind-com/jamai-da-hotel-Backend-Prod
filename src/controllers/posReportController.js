@@ -207,7 +207,8 @@ const emailReport = async (req, res, next) => {
               <p style="color:#888;font-size:13px">Offline (POS): Rs.${report.offline.totalSales.toFixed(2)} · ${report.offline.billCount} bills &nbsp;|&nbsp; Online: Rs.${report.online.totalSales.toFixed(2)}</p>
             </div>`;
             await sendRawEmail(recipient, subject, cover, [
-                { filename: filename || 'sales-report.pdf', content: Buffer.from(pdfBase64, 'base64') },
+                // Already base64 from the client — hand it over as-is.
+                { filename: filename || 'sales-report.pdf', content: pdfBase64 },
             ]);
         } else {
             // Fallback: inline HTML report (no attachment).

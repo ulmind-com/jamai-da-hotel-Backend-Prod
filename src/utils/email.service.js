@@ -5,6 +5,19 @@ const path = require('path');
 const puppeteer = require('puppeteer');
 const Restaurant = require('../models/Restaurant');
 
+// Resend wants attachment content as a base64 string. Callers hand us a raw
+// PDF Buffer, which silently fails with "Attachment content must be a
+// base64-encoded string", so normalise here rather than at every call site.
+const normaliseAttachments = (attachments = []) =>
+  (Array.isArray(attachments) ? attachments : [])
+    .filter((att) => att && att.content)
+    .map((att) => ({
+      filename: att.filename,
+      content: Buffer.isBuffer(att.content)
+        ? att.content.toString('base64')
+        : String(att.content),
+    }));
+
 const compileTemplate = async (templateName, data) => {
   const filePath = path.join(__dirname, 'emailTemplates', `${templateName}.hbs`);
   const html = await fs.readFile(filePath, 'utf-8');
@@ -28,10 +41,7 @@ const sendEmail = async (to, subject, templateName, data, attachments = []) => {
     const resend = new Resend(process.env.RESEND_API_KEY);
     const html = await compileTemplate(templateName, data);
 
-    const formattedAttachments = attachments.map(att => ({
-      filename: att.filename,
-      content: att.content
-    }));
+    const formattedAttachments = normaliseAttachments(attachments);
 
     const mailOptions = {
       from: process.env.EMAIL_FROM || 'onboarding@resend.dev', // Ensure you use a verified domain here in production e.g. 'orders@yourdomain.com'
@@ -79,8 +89,9 @@ const sendRawEmail = async (to, subject, html, attachments = []) => {
       subject,
       html,
     };
-    if (Array.isArray(attachments) && attachments.length > 0) {
-      payload.attachments = attachments;
+    const formattedAttachments = normaliseAttachments(attachments);
+    if (formattedAttachments.length > 0) {
+      payload.attachments = formattedAttachments;
     }
     const { data, error } = await resend.emails.send(payload);
     if (error) {

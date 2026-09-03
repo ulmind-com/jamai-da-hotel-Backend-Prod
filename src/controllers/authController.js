@@ -17,7 +17,7 @@ const {
 } = require('../utils/email.service');
 
 const CLIENT_URL = () =>
-    (process.env.CLIENT_URL || 'https://haldiacloudkitchen.in').replace(/\/$/, '');
+    (process.env.CLIENT_URL || 'https://www.jamaidahotel.online').replace(/\/$/, '');
 
 // @desc    Send an OTP to verify email before signup
 // @route   POST /api/auth/send-otp

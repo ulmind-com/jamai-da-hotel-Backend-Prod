@@ -55,7 +55,7 @@ const sendEmail = async (to, subject, templateName, data, attachments = []) => {
 };
 
 const sendWelcomeEmail = async (user) => {
-  await sendEmail(user.email, 'Welcome to Food Delivery App! 🍔', 'welcome', {
+  await sendEmail(user.email, 'Welcome to Jamai Da Hotel & Restaurant! 🍔', 'welcome', {
     name: user.name,
     year: new Date().getFullYear(),
   });
@@ -132,7 +132,7 @@ const sendCouponBroadcast = async (user, coupon) => {
     code: coupon.code,
     colorClass,
     logo: restaurant ? restaurant.logo : 'https://placehold.co/100x100?text=Logo', // Fallback
-    restaurantName: restaurant ? restaurant.name : 'Food Delivery'
+    restaurantName: restaurant ? restaurant.name : 'Jamai Da Hotel & Restaurant'
   });
 };
 
@@ -198,7 +198,7 @@ const sendOrderStatusEmail = async (order, user) => {
       `${order.deliveryAddress.addressLine1}, ${order.deliveryAddress.city || ''}` : order.deliveryAddress,
 
     // Restaurant Info
-    restaurantName: restaurant ? restaurant.name : 'Cloud Kitchen Haldia',
+    restaurantName: restaurant ? restaurant.name : 'Jamai Da Hotel & Restaurant',
     restaurantAddress: restaurant ? restaurant.address : 'Haldia, West Bengal',
     logo: restaurant ? restaurant.logo : null
   });
@@ -251,7 +251,7 @@ const generateOrderInvoicePDF = async (order, user) => {
     paymentStatus: order.paymentStatus,
     // Restaurant Details
     // Restaurant Details
-    restaurantName: restaurant ? restaurant.name : 'Cloud Kitchen Haldia',
+    restaurantName: restaurant ? restaurant.name : 'Jamai Da Hotel & Restaurant',
     restaurantAddress: restaurant ? restaurant.address : 'Gandhi Nagar Colony, Haldia',
     restaurantGST: restaurant ? restaurant.gstIn : '-',
     restaurantFSSAI: restaurant ? restaurant.fssaiLicense : '-',
@@ -311,7 +311,7 @@ const sendOrderDeliveredWithInvoice = async (order, user, existingPdfBuffer = nu
       `${order.deliveryAddress.addressLine1}, ${order.deliveryAddress.city || ''}` : order.deliveryAddress,
 
     // Restaurant Info for Header
-    restaurantName: restaurant ? restaurant.name : 'Cloud Kitchen Haldia',
+    restaurantName: restaurant ? restaurant.name : 'Jamai Da Hotel & Restaurant',
     restaurantAddress: restaurant ? restaurant.address : 'Haldia, West Bengal',
     logo: restaurant ? restaurant.logo : null
   }, [

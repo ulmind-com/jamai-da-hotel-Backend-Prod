@@ -1,4 +1,5 @@
 const { Client, RemoteAuth, MessageMedia } = require('whatsapp-web.js');
+const { formatDate } = require('../utils/datetime');
 const { MongoStore } = require('wwebjs-mongo');
 const mongoose = require('mongoose');
 const qrcode = require('qrcode-terminal');
@@ -156,7 +157,7 @@ Hope you enjoy the meal! 🥘
 🧾 *INVOICE SUMMARY*
 ━━━━━━━━━━━━━━━━━━━━
 🆔 *Order #:* ${customId}
-📅 *Date:* ${new Date().toLocaleDateString('en-IN')}
+📅 *Date:* ${formatDate(new Date())}
 💰 *Grand Total:* *₹${totalAmount}*
 ━━━━━━━━━━━━━━━━━━━━
 

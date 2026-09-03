@@ -1,4 +1,5 @@
 const PosBill = require('../models/PosBill');
+const { formatDate } = require('../utils/datetime');
 const Order = require('../models/Order');
 const Table = require('../models/Table');
 const Kot = require('../models/Kot');
@@ -155,7 +156,7 @@ const getReport = async (req, res, next) => {
 const money = (n) => `Rs.${(n || 0).toFixed(2)}`;
 
 const reportHtml = (r) => {
-    const d = (x) => new Date(x).toLocaleDateString('en-IN');
+    const d = (x) => formatDate(x);
     const payRows = Object.entries(r.offline.byPayment)
         .map(([k, v]) => `<tr><td>${k}</td><td style="text-align:right">${v.count}</td><td style="text-align:right">${money(v.total)}</td></tr>`).join('');
     const staffRows = r.offline.byStaff
@@ -195,7 +196,7 @@ const emailReport = async (req, res, next) => {
             throw new Error('No recipient email available');
         }
         const report = await buildReport(from, to);
-        const rangeLabel = `${new Date(from).toLocaleDateString('en-IN')} — ${new Date(to).toLocaleDateString('en-IN')}`;
+        const rangeLabel = `${formatDate(from)} — ${formatDate(to)}`;
         const subject = `Sales Report · ${rangeLabel}`;
         const { pdfBase64, filename } = req.body;
 

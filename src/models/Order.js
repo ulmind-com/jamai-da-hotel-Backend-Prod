@@ -135,6 +135,12 @@ const orderSchema = new mongoose.Schema(
         cancellationReason: {
             type: String, // Reason for cancellation (User or Admin provided)
         },
+        // When the order was actually handed over, as opposed to createdAt,
+        // which is when it was placed.
+        deliveredAt: {
+            type: Date,
+            required: false,
+        },
         // Delivery rider who marked the order delivered.
         deliveredBy: {
             type: mongoose.Schema.Types.ObjectId,

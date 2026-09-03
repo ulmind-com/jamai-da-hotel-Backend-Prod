@@ -4,19 +4,47 @@ const fs = require('fs-extra');
 const path = require('path');
 const puppeteer = require('puppeteer');
 const Restaurant = require('../models/Restaurant');
+const { formatDate, formatDateTime, formatOrderDate } = require('./datetime');
 
-// Resend wants attachment content as a base64 string. Callers hand us a raw
-// PDF Buffer, which silently fails with "Attachment content must be a
-// base64-encoded string", so normalise here rather than at every call site.
+// Resend wants attachment content as a base64 string, so every caller's
+// content has to be converted here rather than at each call site.
+//
+// Puppeteer's page.pdf() returns a Uint8Array, not a Buffer. Passing that
+// through String() yields "37,80,68,70,..." — the bytes as decimal text —
+// which Resend happily accepts and decodes as base64, producing a file full
+// of noise with no %PDF header. That is silent: the send succeeds and the
+// attachment is ruined. So convert every binary shape explicitly and only
+// treat a genuine string as ready-made base64.
+const toBase64 = (content) => {
+  if (Buffer.isBuffer(content)) return content.toString('base64');
+  if (content instanceof ArrayBuffer) return Buffer.from(content).toString('base64');
+  // Uint8Array and friends: respect the view's own offset and length.
+  if (ArrayBuffer.isView(content)) {
+    return Buffer.from(content.buffer, content.byteOffset, content.byteLength).toString('base64');
+  }
+  if (typeof content === 'string') return content;
+  throw new Error(`Unsupported attachment content type: ${Object.prototype.toString.call(content)}`);
+};
+
 const normaliseAttachments = (attachments = []) =>
   (Array.isArray(attachments) ? attachments : [])
     .filter((att) => att && att.content)
-    .map((att) => ({
-      filename: att.filename,
-      content: Buffer.isBuffer(att.content)
-        ? att.content.toString('base64')
-        : String(att.content),
-    }));
+    .map((att) => {
+      const content = toBase64(att.content);
+
+      // A corrupt PDF is invisible until someone opens it, so check the magic
+      // bytes here where we can still shout about it.
+      if (att.filename?.toLowerCase().endsWith('.pdf')) {
+        const head = Buffer.from(content.slice(0, 8), 'base64').toString('latin1');
+        if (!head.startsWith('%PDF')) {
+          console.error(`[email] "${att.filename}" is not a valid PDF (starts with ${JSON.stringify(head)}) — dropping the attachment rather than sending a broken file.`);
+          return null;
+        }
+      }
+
+      return { filename: att.filename, content };
+    })
+    .filter(Boolean);
 
 const compileTemplate = async (templateName, data) => {
   const filePath = path.join(__dirname, 'emailTemplates', `${templateName}.hbs`);
@@ -118,12 +146,8 @@ const sendPasswordResetEmail = async (user, resetUrl) => {
 const sendCouponBroadcast = async (user, coupon) => {
   const restaurant = await Restaurant.findOne();
 
-  const formattedDate = new Date(coupon.validFrom).toLocaleDateString('en-IN', {
-    day: 'numeric', month: 'short'
-  });
-  const formattedExpiry = new Date(coupon.validUntil).toLocaleDateString('en-IN', {
-    day: 'numeric', month: 'short', year: 'numeric'
-  });
+  const formattedDate = formatDate(coupon.validFrom, { day: 'numeric', month: 'short' });
+  const formattedExpiry = formatDate(coupon.validUntil, { day: 'numeric', month: 'short', year: 'numeric' });
 
   const discountSymbol = coupon.discountType === 'FLAT' ? '₹' : '%';
   const colorClass = coupon.discountType === 'FLAT' ? 'bg-yellow' : 'bg-teal';
@@ -159,10 +183,7 @@ const sendOrderStatusEmail = async (order, user) => {
   const restaurant = await Restaurant.findOne();
 
   // Format Date
-  const orderDate = new Date(order.createdAt).toLocaleDateString('en-IN', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-    hour: '2-digit', minute: '2-digit'
-  });
+  const orderDate = formatOrderDate(order.createdAt);
 
   // Prepare Items with Images
   const orderItems = order.items.map(item => ({
@@ -235,7 +256,7 @@ const numberToWords = (num) => {
 
 const generateOrderInvoicePDF = async (order, user) => {
   const restaurant = await Restaurant.findOne();
-  const date = new Date().toLocaleDateString('en-IN');
+  const date = formatDate(new Date());
   const invoiceData = {
     orderId: order.customId || order._id,
     date,
@@ -289,10 +310,10 @@ const sendOrderDeliveredWithInvoice = async (order, user, existingPdfBuffer = nu
   const restaurant = await Restaurant.findOne();
 
   // Format Date
-  const orderDate = new Date(order.createdAt).toLocaleDateString('en-IN', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-    hour: '2-digit', minute: '2-digit'
-  });
+  const orderDate = formatOrderDate(order.createdAt);
+  // The template's "Delivered at" line needs the handover time, not the
+  // time the order was placed.
+  const deliveredDate = formatOrderDate(order.deliveredAt || new Date());
 
   // Prepare Items for Email
   const orderItems = order.items.map(item => ({
@@ -307,6 +328,7 @@ const sendOrderDeliveredWithInvoice = async (order, user, existingPdfBuffer = nu
     orderId: order.customId || order._id,
     customerName: user.name,
     orderDate,
+    deliveredDate,
     items: orderItems,
 
     // Billing

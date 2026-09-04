@@ -147,9 +147,6 @@
             </div>
 
             <div class="row">
-                <span class="label">GSTIN:</span> <span class="value">Unregistered</span>
-            </div>
-            <div class="row">
                 <span class="label">Customer Address:</span>
                 <span class="value">
                     {{#if customerAddress.addressLine1}}
@@ -171,9 +168,6 @@
                 <div><strong>{{restaurantName}}</strong></div>
             </div>
 
-            <div class="row">
-                <span class="label">Restaurant GSTIN:</span> <span class="value">{{restaurantGST}}</span>
-            </div>
             <div class="row">
                 <span class="label">Restaurant FSSAI:</span> <span class="value">{{restaurantFSSAI}}</span>
             </div>
@@ -285,7 +279,7 @@
     <div class="footer-text">
         <p>Name: {{restaurantName}}</p>
         <p>Address: {{restaurantAddress}}</p>
-        <p>GSTIN: {{restaurantGST}} &nbsp;&nbsp;|&nbsp;&nbsp; FSSAI: {{restaurantFSSAI}}</p>
+        <p>FSSAI: {{restaurantFSSAI}}</p>
     </div>
 
 </body>
